@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+        "module": "ESNext",
+        "moduleResolution": "Node",
+        "strict": true,
+        "esModuleInterop": true,
+        "outDir": "./dist",
+        "rootDir": "./src"
+    },
+    "include": [
+        "src/**/*",
+        "src/routes/routes/.ts",
+        "esm-loader.js"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}
