@@ -13,7 +13,7 @@ app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
 
 app.get('/', (req, res) => {
-    res.send('Server is runing......');
+    res.send('Server is runing.......');
 });
 app.use('/api', routes);
 
