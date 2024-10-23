@@ -29,7 +29,19 @@ jobs:
           sudo apt-get install -y docker-compose
 
       # Step 2: Build the Docker images using docker-compose
-      - name: Build and push Docker images
-        run: |
-          docker-compose build
-          docker-compose push
+      - name: Build Docker images
+        run: docker-compose build
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+
+      # Step 3: Push Docker images to Docker Hub
+      - name: Push Docker images
+        run: docker-compose push
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_NAME: ${{ secrets.DB_NAME }}
