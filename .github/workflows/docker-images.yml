@@ -1,34 +1,28 @@
-name: Build and Push Docker image
+name: CI Build
 
 on:
   push:
     branches:
-      - main # Trigger the action on push to the 'main' branch
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout the repository
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - name: Checkout the code
+        uses: actions/checkout@v2
 
-      # Step 2: Set up Docker Buildx (for cross-platform builds)
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
-      # Step 3: Log in to Docker Hub
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      # Step 4: Build the Docker image
-      - name: Build Docker image
-        run: docker build -t mm16z/mm16-webboard:latest .
-
-      # Step 5: Push the Docker image to Docker Hub
-      - name: Push Docker image
-        run: docker push mm16z/mm16-webboard:latest
+      - name: Build and push Docker images
+        run: |
+          docker-compose build
+          docker-compose push
