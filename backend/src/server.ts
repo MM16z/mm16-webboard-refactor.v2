@@ -2,7 +2,7 @@ import { PrismaClient } from '@prisma/client';
 import cors from 'cors';
 import express from 'express';
 
-import routes from './routes/routes.js';
+import routes from './routes/routes';
 
 const PORT = process.env.APP_PORT || 3001;
 
