@@ -44,9 +44,9 @@ async function getAllHomePageData(userId: number | null, offset: number) {
         skip: offset,
     });
 
-    const combinedPosts = allPosts.map((post) => ({
+    const combinedPosts = allPosts.map((post: any) => ({
         ...post,
-        isLiked: post.post_liked.some((like) => like.user_id === userId),
+        isLiked: post.post_liked.some((like: any) => like.user_id === userId),
         post_liked_count: post._count.post_liked,
     }));
 

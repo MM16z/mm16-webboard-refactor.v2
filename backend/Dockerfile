@@ -16,6 +16,9 @@ RUN npm ci --omit=dev
 # Copy the rest of the code
 COPY . .
 
+# Install dependencies including dev dependencies
+RUN npm install --include=dev
+
 # Run TypeScript build
 RUN npm run build
 
