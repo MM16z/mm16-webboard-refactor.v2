@@ -22,24 +22,30 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      # Step 1: Install docker-compose
-      - name: Install Docker Compose
+      - name: Debug Docker Login
         run: |
-          sudo apt-get update
-          sudo apt-get install -y docker-compose
+          echo "Verifying Docker login status..."
+          docker info
+          echo "Current Docker images:"
+          docker images
 
-      # Step 2: Build the Docker images using docker-compose
       - name: Build Docker images
-        run: docker-compose build
+        run: |
+          echo "Building Docker images..."
+          docker-compose build --no-cache
+          echo "Listing built images:"
+          docker images
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           DB_USER: ${{ secrets.DB_USER }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
           DB_NAME: ${{ secrets.DB_NAME }}
 
-      # Step 3: Push Docker images to Docker Hub
       - name: Push Docker images
-        run: docker-compose push
+        run: |
+          echo "Attempting to push images..."
+          docker-compose push
+          echo "Push completed"
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           DB_USER: ${{ secrets.DB_USER }}

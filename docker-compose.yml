@@ -2,6 +2,7 @@ version: '3.8'
 
 services:
   backend:
+    image: mm16z/mm16-webboard:latest
     build:
       context: ./backend
       dockerfile: Dockerfile
