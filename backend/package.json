@@ -32,6 +32,7 @@
         "express": "^4.19.2",
         "jsonwebtoken": "^9.0.2",
         "serverless-http": "^3.2.0",
+        "systeminformation": "^5.23.5",
         "typescript": "^5.5.4"
     },
     "devDependencies": {
