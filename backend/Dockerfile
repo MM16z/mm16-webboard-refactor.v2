@@ -46,8 +46,8 @@ COPY package*.json ./
 # Install production dependencies
 RUN npm ci --omit=dev
 
-# # Install dependencies including dev dependencies
-# RUN npm install --include=dev
+# Install dependencies including dev dependencies
+RUN npm install --include=dev
 
 # Copy the rest of the code
 COPY . .
