@@ -61,5 +61,11 @@ RUN npx prisma generate
 # Expose the port
 EXPOSE 8001
 
+ARG JWT_SECRET
+ENV JWT_SECRET=${JWT_SECRET}
+
+ARG JWT_REFRESH_SECRET
+ENV JWT_REFRESH_SECRET=${JWT_REFRESH_SECRET}
+
 # Start the application with PM2
 CMD ["pm2-runtime", "dist/server.js", "--name", "mm16-webboard-express-refactor"]

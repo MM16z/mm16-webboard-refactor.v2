@@ -44,11 +44,9 @@ jobs:
 
       - name: Build and push Docker images
         run: |
-          # Build the images
-          docker-compose build
-
-          # List the built images
-          docker images
+          docker-compose build \
+            --build-arg JWT_SECRET=${{ secrets.JWT_SECRET }} \
+            --build-arg JWT_REFRESH_SECRET=${{ secrets.JWT_REFRESH_SECRET }}
 
           # Push the images
           docker-compose push

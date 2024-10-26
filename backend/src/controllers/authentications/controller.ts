@@ -50,6 +50,7 @@ export const registerController = async (req: AuthenticatedRequest, res: Respons
         res.status(500).json({
             reason: 'Internal server error',
             message: 'An unexpected error occurred',
+            error: error instanceof Error ? error.message : 'Unknown error',
         });
     }
 };
@@ -108,10 +109,11 @@ export const loginController = async (req: AuthenticatedRequest, res: Response) 
         });
         res.status(200).json({ accessToken: token });
     } catch (error) {
+        console.log('LOGIN ERROR', error);
         res.status(500).json({
             reason: 'Internal server error',
             message: 'An unexpected error occurred',
-            error: error,
+            error: error instanceof Error ? error.message : 'Unknown error',
         });
     }
 };
@@ -139,7 +141,7 @@ export const logoutController = async (req: AuthenticatedRequest, res: Response)
         res.status(500).json({
             reason: 'Internal server error',
             message: 'An unexpected error occurred',
-            error: error,
+            error: error instanceof Error ? error.message : 'Unknown error',
         });
     }
 };
