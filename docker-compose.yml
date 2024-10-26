@@ -30,9 +30,6 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-      args:
-        JWT_SECRET: ${JWT_SECRET}
-        JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET}
     ports:
       - "${BACKEND_PORT:-8001}:8001"
     environment:
