@@ -2,9 +2,9 @@ import { PrismaClient } from '@prisma/client';
 import cors from 'cors';
 import express from 'express';
 
-import routes from './routes/routes';
+import routes from './routes/routes.js';
 
-const PORT = process.env.APP_PORT || 8000;
+const APP_PORT = process.env.APP_PORT || 8001;
 
 const app = express();
 const prisma = new PrismaClient();
@@ -32,8 +32,8 @@ process.on('uncaughtException', (error) => {
     process.exit(1);
 });
 
-const server = app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+const server = app.listen(APP_PORT, () => {
+    console.log(`Server is running on port ${APP_PORT}`);
 });
 
 process.on('SIGTERM', () => {
