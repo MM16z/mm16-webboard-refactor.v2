@@ -107,11 +107,6 @@ export const loginController = async (req: AuthenticatedRequest, res: Response) 
             maxAge: 24 * 60 * 60 * 1000,
             sameSite: 'none'
         });
-        res.cookie('u_id', user.id, {
-            httpOnly: false,
-            secure: false,
-            sameSite: 'lax'
-        });
         res.status(200).json({ accessToken: token });
     } catch (error) {
         console.log('LOGIN ERROR', error);
@@ -135,6 +130,7 @@ export const logoutController = async (req: AuthenticatedRequest, res: Response)
     try {
         const user = await userService.getUserByRefreshToken(refreshToken);
         if (!user) {
+            res.clearCookie('jwtToken', { httpOnly: true, secure: true, sameSite: 'none' });
             return res.status(403).json({ message: 'Forbidden' });
         }
         if (user.id) {
