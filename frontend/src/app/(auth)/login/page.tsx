@@ -29,7 +29,8 @@ function LoginPage() {
             const response: AxiosResponse = await authApiService.Login(value)
             if (response.status === 200) {
                 const token = response.data.accessToken
-                setAuthCookies(token)
+                const userId = response.data.userId
+                setAuthCookies(token, userId)
                 dispatch(updateAuth({ token: token }))
                 const user = await getUserInfo()
                 if (user) {

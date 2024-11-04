@@ -30,10 +30,9 @@ export const removeCookie = (key: string) => {
     Cookies.remove(key)
 }
 
-// Utility functions for common cookie operations
-export const setAuthCookies = (token: string) => {
-    setCookie(COOKIE_KEYS.JWT_TOKEN, token)
+export const setAuthCookies = (token: string, userId: string) => {
     setCookie(COOKIE_KEYS.AUTH_STATUS, 'active')
+    setCookie(COOKIE_KEYS.USER_ID, userId)
 }
 
 export const clearAuthCookies = () => {
