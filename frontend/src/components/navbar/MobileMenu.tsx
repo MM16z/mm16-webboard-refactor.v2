@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import { logOut } from "@/redux/slices/authSlice/authSlice";
 import { authApiService } from "@/api/auth/auth";
 import Swal from "sweetalert2";
+import { clearAuthCookies } from "@/utils/cookies";
 
 const MobileMenu = ({ hamButtonRef, mobileMenuRef }: { hamButtonRef: React.RefObject<SVGSVGElement>, mobileMenuRef: React.RefObject<HTMLDivElement> }) => {
   const pathname = usePathname()
@@ -73,9 +74,7 @@ const MobileMenu = ({ hamButtonRef, mobileMenuRef }: { hamButtonRef: React.RefOb
                 dispatch(logOut());
                 mobileMenuRef.current?.classList.toggle("active");
                 hamButtonRef.current?.classList.toggle("active");
-                Cookies.remove('jwtToken')
-                Cookies.set('u_auth_status', '')
-                Cookies.set('u_id', '', { secure: true })
+                clearAuthCookies()
                 window.location.href = "/";
                 Swal.fire({
                   title: "Success",

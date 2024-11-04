@@ -9,6 +9,7 @@ import { updateUser } from "@/redux/slices/userSlice/userSlice";
 
 import Cookies from "js-cookie";
 import getUserInfo from "@/api/auth/getUserInfo";
+import { clearAuthCookies } from "@/utils/cookies";
 
 const AuthGuard = ({ children }: { children: React.ReactNode }) => {
     const pathname = usePathname();
@@ -35,6 +36,7 @@ const AuthGuard = ({ children }: { children: React.ReactNode }) => {
                     username: '',
                     userId: null
                 }))
+                clearAuthCookies()
                 if (pathname !== '/') {
                     router.push('/login');
                 }

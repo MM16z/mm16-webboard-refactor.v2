@@ -2,10 +2,41 @@
   z-index: 1;
   position: relative;
   width: 400px;
-  height: auto;
+  height: fit-content;
   display: flex;
   flex-direction: column;
   padding-bottom: 30px;
+}
+
+.post-action-btn {
+  position: absolute;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.edit-btn {
+  right: 100px;
+  top: 20px;
+  background-color: var(--edit-btn-color, #4a90e2);
+  color: white;
+  z-index: 9999;
+}
+
+.delete-btn {
+  right: 20px;
+  top: 20px;
+  background-color: var(--delete-btn-color, #e24a4a);
+  color: white;
+  z-index: 9999;
+}
+
+.post-action-btn:hover {
+  opacity: 0.8;
+  transform: translateY(-1px);
 }
 
 .post-box-container > .vertical-line {

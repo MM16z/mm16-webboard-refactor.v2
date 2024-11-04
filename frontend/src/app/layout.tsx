@@ -14,6 +14,7 @@ import '@/styles/auth-form/auth-form.css'
 import Navbar from "@/components/navbar/Navbar";
 import StoreProvider from "@/redux/providerComponent/storeProvider";
 import AuthGuard from "@/services/AuthGuard";
+import { Toaster } from 'sonner'
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -35,7 +36,19 @@ export default function RootLayout({
             <Navbar />
             {children}
           </AuthGuard>
-          {/* <div className="absolute bottom-0">GIT LOGO IMG</div> */}
+          <Toaster
+            position="top-right"
+            closeButton
+            richColors
+            expand={true}
+            toastOptions={{
+              style: {
+                background: 'white',
+                color: 'black',
+              },
+              className: 'my-toast-class',
+            }}
+          />
         </body>
       </StoreProvider>
     </html>

@@ -5,6 +5,7 @@ import { verela } from "@/fonts/fonts";
 import { useAppSelector } from "@/redux/hook";
 import { useRouter } from "next/navigation";
 import { MouseEventHandler } from "react";
+import { toast } from "sonner";
 import Swal from "sweetalert2";
 
 type CommentBoxContainer = {
@@ -30,6 +31,7 @@ const CommentBoxContainer = (probs: CommentBoxContainer) => {
                     icon: "success"
                 })
                 router.refresh()
+                toast.success("Comment deleted successfully")
             }
         } catch (error) {
             console.log(error)
@@ -48,11 +50,7 @@ const CommentBoxContainer = (probs: CommentBoxContainer) => {
             </span>
             <span className="comment-username">{commentusername}</span>
             <span className={`comment-post-content ${verela.className} pt-2`}>{commentcontent}</span>
-            <span className="comment-delete" style={{
-                fontFamily: "Silkscreen",
-                color: "red",
-                border: "1px solid red",
-                width: "fit-content",
+            <button className="post-action-btn delete-btn" style={{
                 display: isHasPermission ? "block" : "none",
                 cursor: "pointer",
             }}
@@ -70,7 +68,7 @@ const CommentBoxContainer = (probs: CommentBoxContainer) => {
                         }
                     })
                 }}
-            >Delete comment</span>
+            >Delete comment</button>
         </div>
     );
 };

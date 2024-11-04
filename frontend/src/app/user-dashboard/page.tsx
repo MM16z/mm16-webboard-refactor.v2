@@ -1,253 +1,144 @@
 'use client'
 import "@/styles/(pages)/user-dashboard/user-dashboard.css"
 import "@/styles/post-box/post-box.css"
-// import "@/styles/post-box/comment-box.css"
+import 'react-loading-skeleton/dist/skeleton.css'
 
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import dayjs from 'dayjs';
-import { dashBoardApiService } from '@/api/userDashboardService';
+import React, { useEffect, useState } from 'react';
 import { useAppSelector } from '@/redux/hook';
-import EditInput from '@/components/(pages)/user-dashboard/EditInput';
 import { silkscreen } from "@/fonts/fonts";
 import { useRouter } from "next/navigation";
+import EditInput from '@/components/(pages)/user-dashboard/EditInput';
 
-import swal from "sweetalert2";
-import Image from "next/image";
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { motion } from "framer-motion"
+import { FormError } from "@/components/ui/form-error"
 
-import userIcon from "@/assets/bussiness-man.png";
+import { DASHBOARD_CONSTANTS } from '@/constants/dashboard';
+import { UserDashboardPostBox } from '@/components/(pages)/user-dashboard/UserDashboardPostBox';
+import { usePostOperations } from '@/hooks/useUserDashboardHooks';
+import { PostFormData } from "@/types/userDashboard.types";
+import LoadingSkeleton from '@/components/ui/loading-skeleton';
+import { postSchema } from "@/schemas/userdashboard.schema";
 
-const UserDashboardPage = (
-    {
-        params,
-        searchParams,
-    }: {
-        params: { slug: string }
-        searchParams: { [key: string]: string | string[] | undefined }
-    }
-) => {
+const UserDashboardPage = () => {
     const router = useRouter();
-    const getUserData = useAppSelector((state) => state.userSlice.currentUser)
-    const [userPostData, setUserPostData] = useState([]);
+    const getUserData = useAppSelector((state) => state.userSlice.currentUser);
     const userId = getUserData.userId;
 
-    const [postForm, setPostForm] = useState({ title: '', content: '' });
-    const [isEditing, setIsEditing] = useState(false);
-    const [editInputValue, setEditInputValue] = useState(
-        {
-            post_id: null,
-            post_content: '',
+    const [editingPostId, setEditingPostId] = useState<number | null>(null);
+
+    const {
+        posts: userPostData,
+        isLoading,
+        createPost,
+        editPost,
+        deletePost,
+        fetchPosts,
+        isEditing,
+        setIsEditing
+    } = usePostOperations(userId);
+
+    const { register, handleSubmit, formState: { errors }, reset } = useForm<PostFormData>({
+        resolver: zodResolver(postSchema),
+    });
+
+    const onPostSubmitHandler = async (data: PostFormData) => {
+        const success = await createPost(data.title, data.content);
+        if (success) {
+            reset();
+            router.push('/', { scroll: false });
         }
-    );
+    };
 
-    const apiService = useMemo(() => {
-        return dashBoardApiService
-    }, []);
+    const onEditSubmitHandler = async (content: string) => {
+        if (editingPostId === null) return;
 
-    const getUserPostData = useCallback(
-        async (userId: number | null) => {
-            if (userId) {
-                const userPostData = await apiService.getAllUserPosts({
-                    currentUserId: userId,
-                });
-                if (userPostData) {
-                    setUserPostData(userPostData?.userPostData);
-                }
-            }
-        },
-        [apiService]
-    );
-
-    const onPostSubmitHandler = async () => {
-        try {
-            const response = await apiService.createPost({
-                post_title: postForm.title,
-                post_content: postForm.content,
-            });
-            if (response?.status === 201) {
-                setPostForm({ title: '', content: '' });
-                swal.fire({
-                    icon: 'success',
-                    title: 'xdding?',
-                    text: 'Post success!',
-                })
-                return router.push('/', { scroll: false });
-            }
-        } catch (error) {
-            console.log(error)
-            return swal.fire({
-                icon: 'error',
-                text: `Post Failed! - Error ${error}`,
-                title: 'xdding?',
-            })
+        const success = await editPost(editingPostId, content);
+        if (success) {
+            setIsEditing(false);
+            setEditingPostId(null);
         }
-    }
-
-    const onEditSubmitHandler = async () => {
-        try {
-            const response = await apiService.editPost({
-                id: editInputValue.post_id,
-                post_content: editInputValue.post_content,
-            });
-            if (response?.status === 200) {
-                getUserPostData(userId);
-                setIsEditing(false);
-                return swal.fire({
-                    icon: 'success',
-                    title: 'xdding?',
-                    text: 'Edit success!',
-                })
-            }
-        } catch (error) {
-            console.log(error)
-            return swal.fire({
-                icon: 'error',
-                text: `Post Failed! - Error ${error}`,
-                title: 'xdding?',
-            })
-        }
-
-    }
-
-    const onDeletePosthandler = async (postId: number) => {
-        try {
-            const response = await apiService.deletePost({
-                postId: postId,
-            });
-            if (response?.status === 200) {
-                getUserPostData(userId);
-                return swal.fire({
-                    icon: 'success',
-                    title: 'xdding?',
-                    text: 'Delete success!',
-                })
-            }
-        } catch (error) {
-            console.log(error)
-            return swal.fire({
-                icon: 'error',
-                text: `Delete Failed! - Error ${error}`,
-                title: 'xdding?',
-            })
-        }
-    }
+    };
 
     useEffect(() => {
         if (userId) {
-            getUserPostData(userId);
+            fetchPosts();
         }
-    }, [getUserPostData, userId]);
+    }, [fetchPosts, userId]);
 
+    if (isLoading) {
+        return <LoadingSkeleton />
+    }
 
     return (
-        <div className={`${silkscreen.className} userpanel-container`} ref={(e) => { isEditing && e?.scrollIntoView() }}>
-            {isEditing && <EditInput onClose={() => setIsEditing(false)} titleInputValue={editInputValue.post_content} onEditChange={(value) => setEditInputValue({ ...editInputValue, post_content: value })} onEditSubmit={onEditSubmitHandler} />}
-            <span id="username" className={`${silkscreen.className}`} style={{ zIndex: 1 }}>HI! {getUserData?.username} </span>
-            <form onSubmit={(e) => {
-                e.preventDefault();
-                onPostSubmitHandler();
-            }}>
+        <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className={`${silkscreen.className} userpanel-container`}
+            ref={(e) => { isEditing && e?.scrollIntoView() }}
+        >
+            {isEditing && (
+                <EditInput
+                    onClose={() => {
+                        setIsEditing(false);
+                        setEditingPostId(null);
+                    }}
+                    titleInputValue={userPostData.find(post => post.id === editingPostId)?.post_content}
+                    onEditSubmit={onEditSubmitHandler}
+                />
+            )}
+            <span id="username" className={`${silkscreen.className}`} style={{ zIndex: 1 }}>
+                {DASHBOARD_CONSTANTS.MESSAGES.WELCOME} {getUserData?.username}
+            </span>
+            <form onSubmit={handleSubmit(onPostSubmitHandler)}>
                 <div className="user-panel-inputcontainer">
-                    <label htmlFor="post-text-input" style={{ marginBottom: "20px" }}>Write something nice :D</label>
+                    <label htmlFor="post-text-input" style={{ marginBottom: "20px" }}>
+                        {DASHBOARD_CONSTANTS.MESSAGES.WRITE_POST}
+                    </label>
                     <textarea
-                        placeholder={"Title"}
+                        placeholder={DASHBOARD_CONSTANTS.PLACEHOLDERS.TITLE}
                         autoFocus
-                        onChange={(e) => {
-                            setPostForm({ ...postForm, title: e.target.value })
-                        }}
-                        value={postForm.title}
-                        required
+                        {...register("title")}
                         className="post-inputborder"
                         id="post-text-input"
                         typeof="text"
                         style={{ height: "80px", overflow: "hidden" }}
                     />
+                    <FormError message={errors.title?.message} />
                     <textarea
-                        placeholder={"Content"}
-                        onChange={(e) => {
-                            setPostForm({ ...postForm, content: e.target.value })
-                        }}
-                        value={postForm.content}
-                        required
+                        placeholder={DASHBOARD_CONSTANTS.PLACEHOLDERS.CONTENT}
+                        {...register("content")}
                         className="post-inputborder"
                         id="post-text-input"
                         typeof="text"
                     />
-                    <input id="post-submitbtn" type="submit" value="Post"></input>
+                    <FormError message={errors.content?.message} />
+                    <input id="post-submitbtn" type="submit" value="Post" />
                 </div>
             </form>
             <section className="user-posts">
-                <span id="user-post-text">Your recent posts</span>
+                <span id="user-post-text">{DASHBOARD_CONSTANTS.MESSAGES.RECENT_POSTS}</span>
                 <div className="user-posts-container">
-                    {userPostData?.map((post: any) => {
-                        const postId = post.id;
-                        const postTitle = post.post_title;
-                        const postContent = post.post_content;
-                        const postUsername = post.post_username;
-                        const postCreatedAt = post.created_at;
-                        return (
-                            <div className="post-box-container" key={postId}>
-                                <span className="vertical-line"></span>
-                                <span className="vertical-line_1"></span>
-                                <span className="horizontal-line"></span>
-                                <span className="profile-circle-line">
-                                    <Image src={userIcon} alt="profile-circle" width={40} height={40} style={{ scale: 1.2 }} />
-                                </span>
-                                <button
-                                    className={`${userId === post.user_id ? "block" : "hidden"}`}
-                                    id="post-edit-btn"
-                                    type="button"
-                                    onClick={() => {
-                                        setIsEditing(true);
-                                        setEditInputValue({
-                                            post_id: postId,
-                                            post_content: postContent,
-                                        });
-                                    }}
-                                >
-                                    EDIT
-                                </button>
-                                <button
-                                    className={`${userId === post.user_id ? "block" : "hidden"}`}
-                                    id="post-delete-btn"
-                                    type="button"
-                                    onClick={() => {
-                                        // onDeletePosthandler(postId);
-                                        swal.fire({
-                                            title: 'Are you sure?',
-                                            text: 'You will not be able to recover this post!',
-                                            icon: 'warning',
-                                            showCancelButton: true,
-                                            confirmButtonText: 'Yes, delete it!',
-                                            cancelButtonText: 'No, cancel it!',
-                                        }).then((result) => {
-                                            if (result.isConfirmed) {
-                                                onDeletePosthandler(postId);
-                                            }
-                                        })
-                                    }}
-                                >
-                                    DELETE
-                                </button>
-                                <span className="username">{postUsername}</span>
-                                <span className="title">{postTitle}</span>
-                                <span className="line5"></span>
-                                <span className="line6"></span>
-                                <span className="post-content" style={{ marginBottom: "25px" }}>
-                                    {postContent}
-                                </span>
-                                <span className="post-date">
-                                    {dayjs(postCreatedAt).format("D MMM YYYY - HH:mm")}
-                                </span>
-                                <span className="horizontal-line_1"></span>
-                            </div>
-                        );
-                    })}
+                    {userPostData?.map((post) => (
+                        <UserDashboardPostBox
+                            key={post.id}
+                            post={post}
+                            onEdit={(id, content) => {
+                                setIsEditing(true);
+                                setEditingPostId(id);
+                            }}
+                            onDelete={deletePost}
+                            currentUserId={userId}
+                        />
+                    ))}
                 </div>
             </section>
             <div id="home-page-bg">
                 <span id="home-page-bg-nested"></span>
             </div>
-        </div>
+        </motion.div>
     );
 }
 

@@ -14,8 +14,8 @@ import { useAppDispatch } from '@/redux/hook'
 import { updateUser } from '@/redux/slices/userSlice/userSlice'
 import { AxiosResponse } from 'axios'
 import { authApiService } from '@/api/auth/auth'
-import Cookies from 'js-cookie'
 import { updateAuth } from '@/redux/slices/authSlice/authSlice'
+import { setAuthCookies, clearAuthCookies, getCookie } from '@/utils/cookies'
 import getUserInfo from '@/api/auth/getUserInfo'
 
 
@@ -29,8 +29,7 @@ function LoginPage() {
             const response: AxiosResponse = await authApiService.Login(value)
             if (response.status === 200) {
                 const token = response.data.accessToken
-                Cookies.set('jwtToken', token, { secure: true })
-                Cookies.set('u_auth_status', 'active')
+                setAuthCookies(token)
                 dispatch(updateAuth({ token: token }))
                 const user = await getUserInfo()
                 if (user) {
@@ -40,7 +39,6 @@ function LoginPage() {
                         userId: user.id
                     }))
                 }
-                Cookies.set('u_id', user.id, { secure: true })
                 router.push('/user-dashboard')
                 swal.fire({
                     icon: 'success',
@@ -51,9 +49,7 @@ function LoginPage() {
         } catch (error: any) {
             if (error.response) {
                 console.log(error)
-                Cookies.set('jwtToken', '', { secure: true })
-                Cookies.set('u_auth_status', '')
-                Cookies.set('u_id', '', { secure: true })
+                clearAuthCookies()
                 return swal.fire({
                     icon: 'error',
                     title: 'xdding?',
@@ -64,8 +60,8 @@ function LoginPage() {
     }
 
     useEffect(() => {
-        const token = Cookies.get('u_auth_status')
-        if (token === 'active') {
+        const authStatus = getCookie('u_auth_status')
+        if (authStatus === 'active') {
             router.push('/user-dashboard')
         }
     }, [router])

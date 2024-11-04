@@ -23,6 +23,9 @@ const authMiddleware = (req: AuthenticatedRequest, res: Response, next: NextFunc
         if (req.path.startsWith('/api/homepage')) {
             return next();
         } else if (!refreshToken) {
+            res.clearCookie("jwtToken", { secure: true, sameSite: 'none' })
+            res.clearCookie("u_auth_status")
+            res.clearCookie("u_id")
             return res.status(401).json({ message: 'Unauthorized: No token provided' });
         } else {
             return next();
@@ -32,6 +35,9 @@ const authMiddleware = (req: AuthenticatedRequest, res: Response, next: NextFunc
         if (req.path.startsWith('/api/homepage')) {
             return next();
         }
+        res.clearCookie("jwtToken", { secure: true, sameSite: 'none' })
+        res.clearCookie("u_auth_status")
+        res.clearCookie("u_id")
         return res.status(401).json({ message: 'Unauthorized: Invalid token' });
     }
 };
