@@ -36,7 +36,7 @@ export const setAuthCookies = (token: string, userId: string) => {
 }
 
 export const clearAuthCookies = () => {
-    setCookie(COOKIE_KEYS.JWT_TOKEN, '')
-    setCookie(COOKIE_KEYS.AUTH_STATUS, '')
-    setCookie(COOKIE_KEYS.USER_ID, '')
+    Cookies.remove(COOKIE_KEYS.JWT_TOKEN)
+    Cookies.remove(COOKIE_KEYS.AUTH_STATUS)
+    Cookies.remove(COOKIE_KEYS.USER_ID)
 } 
