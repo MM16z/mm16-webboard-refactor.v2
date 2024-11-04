@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { postSchema } from '@/schemas/userdashboardSchema';
+import { postSchema } from '@/schemas/userdashboard.schema';
 
 type PostFormData = z.infer<typeof postSchema>;
 
