@@ -17,7 +17,7 @@ export const COOKIE_KEYS = {
 export const setCookie = (
     key: string,
     value: string,
-    options: CookieOptions = { secure: true }
+    options: CookieOptions = { secure: false }
 ) => {
     Cookies.set(key, value, options)
 }
@@ -36,7 +36,7 @@ export const setAuthCookies = (token: string, userId: string) => {
 }
 
 export const clearAuthCookies = () => {
-    Cookies.remove(COOKIE_KEYS.JWT_TOKEN)
-    Cookies.remove(COOKIE_KEYS.AUTH_STATUS)
-    Cookies.remove(COOKIE_KEYS.USER_ID)
+    removeCookie(COOKIE_KEYS.JWT_TOKEN)
+    removeCookie(COOKIE_KEYS.AUTH_STATUS)
+    removeCookie(COOKIE_KEYS.USER_ID)
 } 
