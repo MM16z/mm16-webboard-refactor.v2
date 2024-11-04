@@ -30,7 +30,7 @@ export const removeCookie = (key: string) => {
     Cookies.remove(key)
 }
 
-export const setAuthCookies = (token: string, userId: string) => {
+export const setAuthCookies = () => {
     setCookie(COOKIE_KEYS.AUTH_STATUS, 'active')
 }
 

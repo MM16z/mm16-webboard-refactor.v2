@@ -27,7 +27,6 @@ export const getUserByIdController = async (req: AuthenticatedRequest, res: Resp
             res.cookie('u_id', user.id, { httpOnly: true });
             res.status(200).json(user);
         } else {
-            res.clearCookie('u_id');
             res.status(404).json({ message: 'User not found' });
         }
     } catch (error) {
