@@ -107,11 +107,6 @@ export const loginController = async (req: AuthenticatedRequest, res: Response) 
             maxAge: 24 * 60 * 60 * 1000,
             sameSite: 'none'
         });
-        res.cookie('u_id', user.id, {
-            httpOnly: true,
-            secure: true,
-            sameSite: 'none'
-        });
         res.status(200).json({ accessToken: token });
     } catch (error) {
         console.log('LOGIN ERROR', error);
