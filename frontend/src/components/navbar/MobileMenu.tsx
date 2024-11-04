@@ -84,6 +84,7 @@ const MobileMenu = ({ hamButtonRef, mobileMenuRef }: { hamButtonRef: React.RefOb
               }
             } catch (error) {
               console.log(error);
+              clearAuthCookies()
               Swal.fire({
                 title: "Error",
                 text: `An error occurred during logout. Please try again. Error: ${error}`,
