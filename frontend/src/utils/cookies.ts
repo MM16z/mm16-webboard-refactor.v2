@@ -17,7 +17,7 @@ export const COOKIE_KEYS = {
 export const setCookie = (
     key: string,
     value: string,
-    options: CookieOptions = { secure: false, sameSite: 'none' }
+    options: CookieOptions = {}
 ) => {
     Cookies.set(key, value, options)
 }
