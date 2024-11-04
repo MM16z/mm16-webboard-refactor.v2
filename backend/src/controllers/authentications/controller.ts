@@ -110,7 +110,7 @@ export const loginController = async (req: AuthenticatedRequest, res: Response) 
         res.cookie('u_id', user.id, {
             httpOnly: false,
             secure: false,
-            sameSite: 'none'
+            sameSite: 'lax'
         });
         res.status(200).json({ accessToken: token });
     } catch (error) {
