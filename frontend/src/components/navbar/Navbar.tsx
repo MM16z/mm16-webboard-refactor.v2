@@ -37,6 +37,7 @@ export default function Navbar() {
             }
         } catch (error) {
             console.log(error)
+            clearAuthCookies()
             Swal.fire({
                 title: 'Error',
                 text: `Failed to logout ${error}`,

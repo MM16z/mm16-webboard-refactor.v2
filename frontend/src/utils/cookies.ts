@@ -11,7 +11,6 @@ export interface CookieOptions {
 export const COOKIE_KEYS = {
     JWT_TOKEN: 'jwtToken',
     AUTH_STATUS: 'u_auth_status',
-    USER_ID: 'u_id',
 } as const
 
 export const setCookie = (
@@ -37,5 +36,4 @@ export const setAuthCookies = () => {
 export const clearAuthCookies = () => {
     removeCookie(COOKIE_KEYS.JWT_TOKEN)
     removeCookie(COOKIE_KEYS.AUTH_STATUS)
-    removeCookie(COOKIE_KEYS.USER_ID)
 } 
