@@ -18,10 +18,8 @@ export function ClientPosts() {
 
     useEffect(() => {
         const fetchData = async () => {
-            if (userId) {
-                const { allPosts, postsCount } = await getHomePageData(page, userId.toString())
-                setData({ allPosts, postsCount })
-            }
+            const { allPosts, postsCount } = await getHomePageData(page, userId?.toString() || '')
+            setData({ allPosts, postsCount })
         }
         fetchData()
     }, [userId, page])
