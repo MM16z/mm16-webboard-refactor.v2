@@ -1,11 +1,10 @@
 import { Post } from "@/types/shared/postTypes";
 import { DASHBOARD_CONSTANTS } from "@/constants/dashboard";
 import { showConfirmation } from "@/utils/alert";
-import Image from "next/image";
-import userIcon from "@/assets/bussiness-man.png";
 import dayjs from "dayjs";
 import { verela } from "@/fonts/fonts";
 import { ProfileImageUpload } from "@/components/profile/ProfileImageUpload";
+import { isAdmin } from "@/utils/permission";
 
 interface UserDashboardPostBoxProps {
     post: Post;
@@ -42,7 +41,7 @@ export const UserDashboardPostBox = ({
             <span className="horizontal-line"></span>
             <ProfileImageUpload currentImageUrl={post.user?.profile_image ?? ''} showUploadSection={false} />
 
-            {isOwner && (
+            {(isOwner || isAdmin(currentUserId ?? null)) && (
                 <>
                     <button
                         className="post-action-btn edit-btn"
