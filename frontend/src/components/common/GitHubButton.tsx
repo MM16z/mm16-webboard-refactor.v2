@@ -20,7 +20,7 @@ const GitHubButton = () => {
         setIsDragging(false);
 
         if (dragDuration < 200) {
-            window.open('https://github.com/YOUR_GITHUB_REPO_URL', '_blank');
+            window.open('https://github.com/MM16z/mm16-webboard-v.refactor', '_blank');
         }
     };
 
