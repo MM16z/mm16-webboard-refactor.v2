@@ -43,40 +43,25 @@ Install dependencies
 
 ## 🏗️ Project Structure
 
-├── frontend/
-│ ├── src/
-│ │ ├── app/ # Next.js App Router pages
-│ │ ├── api/ # API services
-│ │ ├── assets/ # Static assets
-│ │ ├── components/ # Reusable components
-│ │ ├── constants/ # Constants
-│ │ ├── hooks/ # Custom hooks
-│ │ ├── schemas/ # Zod schemas
-│ │ ├── types/ # TypeScript types
-│ │ ├── utils/ # Utility functions
-│ │ └── redux/ # Redux store and slices
-│ └── public/ # Static assets
+### frontend/
+
+frontend/ ├── src/ │ ├── app/ # Next.js App Router pages │ ├── api/ # API services │ ├── assets/ # Static assets │ ├── components/ # Reusable components │ ├── constants/ # Constants │ ├── hooks/ # Custom hooks │ ├── schemas/ # Zod schemas │ ├── types/ # TypeScript types │ ├── utils/ # Utility functions │ └── redux/ # Redux store and slices └── public/ # Static assets
 
 ## .ENV FRONTEND
 
+```env
 NEXT_PUBLIC_API_URL=http://localhost:3000
 NEXT_PUBLIC_UPLOAD_URL=http://localhost:3000/uploads
 DATABASE_URL="postgresql://username:password@localhost:5432/dbname"
+```
 
+### backend/
 
-├── backend/
-│ ├── src/
-│ ├── controllers/ # Route controllers
-│ ├── services/ # Business logic
-│ ├── models/ # Database models
-│ ├── routes/ # API routes
-│ ├── middleware/ # Custom middleware
-│ ├── utils/ # Utility functions
-│ └── prisma/ # Database schema and migrations
-└──── uploads/ # Uploaded files
+backend/ ├── src/ │ ├── controllers/ # Route controllers │ ├── services/ # Business logic │ ├── models/ # Database models │ ├── routes/ # API routes │ ├── middleware/ # Custom middleware │ ├── utils/ # Utility functions │ └── prisma/ # Database schema and migrations └── uploads/ # Uploaded files
 
 ## .ENV BACKEND
 
+```env
 DATABASE_URL="postgresql://XX:XX@localhost:XX/postgres?schema=mm16-webboard"
 JWT_SECRET=XX
 JWT_REFRESH_SECRET=XX
@@ -86,5 +71,6 @@ DB_USER=XX
 DB_PASSWORD=XX
 DB_NAME=XX
 DB_PORT=XX
+```
 
 - MM16z
