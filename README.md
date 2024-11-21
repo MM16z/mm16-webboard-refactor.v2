@@ -45,7 +45,9 @@ Install dependencies
 
 ### frontend/
 
+```markdown
 frontend/ ├── src/ │ ├── app/ # Next.js App Router pages │ ├── api/ # API services │ ├── assets/ # Static assets │ ├── components/ # Reusable components │ ├── constants/ # Constants │ ├── hooks/ # Custom hooks │ ├── schemas/ # Zod schemas │ ├── types/ # TypeScript types │ ├── utils/ # Utility functions │ └── redux/ # Redux store and slices └── public/ # Static assets
+```
 
 ## .ENV FRONTEND
 
@@ -57,7 +59,9 @@ DATABASE_URL="postgresql://username:password@localhost:5432/dbname"
 
 ### backend/
 
+```markdown
 backend/ ├── src/ │ ├── controllers/ # Route controllers │ ├── services/ # Business logic │ ├── models/ # Database models │ ├── routes/ # API routes │ ├── middleware/ # Custom middleware │ ├── utils/ # Utility functions │ └── prisma/ # Database schema and migrations └── uploads/ # Uploaded files
+```
 
 ## .ENV BACKEND
 
