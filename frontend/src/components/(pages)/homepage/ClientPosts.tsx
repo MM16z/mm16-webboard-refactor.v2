@@ -9,6 +9,7 @@ import { PostList } from "./PostList"
 import ReactPaginateComponent from "@/components/paginate/ReactPaginate"
 import { useSearchParams } from 'next/navigation'
 import { silkscreen, verela } from "@/fonts/fonts"
+import GitHubButton from "@/components/common/GitHubButton"
 
 export function ClientPosts() {
     const userId = useAppSelector((state) => state.userSlice.currentUser.userId)
@@ -29,6 +30,7 @@ export function ClientPosts() {
     return (
         <main className={`${silkscreen.className} overflow-x-hidden`}>
             <SystemInfo />
+            <GitHubButton />
             <div id="home-page-bg">
                 <span id="home-page-bg-nested"></span>
             </div>
