@@ -35,14 +35,15 @@ const PostItem = ({ post }: { post: HomePagePost }) => {
             title={post.post_title}
             postcontent={post.post_content}
             postdate={dayjs(post.created_at).format("D MMM YYYY - HH:mm")}
+            userImage={post.user.profile_image}
         >
             <HeartBtn
                 postLikedCount={post.post_liked_count}
                 defaultChecked={post.isLiked}
                 postId={post.id}
             />
-            <CommentForm postId={post.id} />
             <CommentList comments={post.comments} />
+            <CommentForm postId={post.id} />
         </PostBoxContainer>
     )
 }
@@ -50,18 +51,7 @@ const PostItem = ({ post }: { post: HomePagePost }) => {
 const CommentList = ({ comments }: { comments: PostComment[] }) => {
     return (
         <>
-            {comments.map((comment) => {
-                if (comment.comment_content === null) {
-                    return (
-                        <div
-                            key={comment.id}
-                            className="relative left-5 top-2.5 font-silkscreen text-sm opacity-80"
-                        >
-                            No comment
-                        </div>
-                    )
-                }
-
+            {comments.length > 0 ? comments.map((comment) => {
                 return (
                     <CommentBoxContainer
                         key={comment.id}
@@ -69,9 +59,10 @@ const CommentList = ({ comments }: { comments: PostComment[] }) => {
                         commentcontent={comment.comment_content}
                         commentId={comment.id}
                         commentUserId={comment.user.id}
+                        userImage={comment.user.profile_image}
                     />
                 )
-            })}
+            }) : <div className="relative left-5 top-2.5 font-silkscreen text-sm opacity-80 mb-4">No comment</div>}
         </>
     )
 } 

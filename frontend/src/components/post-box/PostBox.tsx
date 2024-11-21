@@ -1,37 +1,31 @@
 import { PostBoxContainerType } from "@/models/components/post-boxType";
-import { verela } from "@/fonts/fonts";
+import { verela, silkscreen } from "@/fonts/fonts";
+import { ProfileImageUpload } from "../profile/ProfileImageUpload";
+import { useAppSelector } from "@/redux/hook";
 
 function PostBoxContainer({ children, ...props }: PostBoxContainerType) {
-    const { username, title, postcontent, postdate } = props;
+    const { username, title, postcontent, postdate, userImage } = props;
 
     return (
         <div className="post-box-container">
             <span className="vertical-line"></span>
             <span className="vertical-line_1"></span>
             <span className="horizontal-line"></span>
-            <span className="profile-circle-line">
-                <span className="profile-circle-img" title="user icons" style={{ scale: 1.2 }}>User icons created by Freepik - Flaticon</span>
-            </span>
+            <ProfileImageUpload currentImageUrl={userImage ?? ''} showUploadSection={false} />
             <span className="username">{username}</span>
             <span className={`title ${verela.className}`}>{title}</span>
             <span className="line5"></span>
             <span className="line6"></span>
-            <span className={`post-content first-line ${verela.className}`}>{postcontent}</span>
+            <span className={`post-content ${verela.className}`}>{postcontent}</span>
+            <span className={`${silkscreen.className} text-right pr-4 font-bold tracking-[-0.10em] mt-2`}>{postdate}</span>
             <div
-                style={{
-                    fontSize: "15px",
-                    marginTop: "10px",
-                    marginLeft: "20px",
-                    marginBottom: "10px",
-                    opacity: "0.75",
-                    fontFamily: "Silkscreen, cursive",
-                }}
+                className={`${silkscreen.className} text-[15px] mt-[10px] ml-[20px] mb-[10px] opacity-75 font-bold`}
             >
                 comments
             </div>
             {children}
-            <span className={`post-date ${verela.className}`}>{postdate}</span>
             <span className="horizontal-line_1"></span>
+
         </div>
     );
 }

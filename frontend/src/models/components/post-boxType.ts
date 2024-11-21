@@ -6,4 +6,5 @@ export interface PostBoxContainerType {
     title: string;
     postcontent: string;
     postdate: string;
+    userImage: string;
 }

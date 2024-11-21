@@ -7,16 +7,18 @@ import { useRouter } from "next/navigation";
 import { MouseEventHandler } from "react";
 import { toast } from "sonner";
 import Swal from "sweetalert2";
+import { ProfileImageUpload } from "../profile/ProfileImageUpload";
 
 type CommentBoxContainer = {
     commentusername: string;
     commentcontent: string;
     commentId: number;
-    commentUserId: number
+    commentUserId: number;
+    userImage: string;
 };
 
 const CommentBoxContainer = (probs: CommentBoxContainer) => {
-    const { commentusername, commentcontent, commentId, commentUserId } = probs;
+    const { commentusername, commentcontent, commentId, commentUserId, userImage } = probs;
     const router = useRouter()
     const userId = useAppSelector(state => state.userSlice.currentUser.userId)
 
@@ -45,11 +47,11 @@ const CommentBoxContainer = (probs: CommentBoxContainer) => {
     return (
         <div className="reply-box-container pt-4">
             <hr className="mt-[-10px]"></hr>
-            <span className="comment-profile-circle-line">
-                <span className="comment-profile-circle-img" title="user icons">User icons created by Freepik - Flaticon</span>
-            </span>
-            <span className="comment-username">{commentusername}</span>
-            <span className={`comment-post-content ${verela.className} pt-2`}>{commentcontent}</span>
+            <div className="flex flex-row items-center gap-2 pt-4 pb-2">
+                <ProfileImageUpload currentImageUrl={userImage ?? ''} showUploadSection={false} customSize="w-8 h-8" />
+                <span className="">{commentusername}</span>
+            </div>
+            <span className={`${verela.className} pt-2`}>{commentcontent}</span>
             <button className="post-action-btn delete-btn" style={{
                 display: isHasPermission ? "block" : "none",
                 cursor: "pointer",

@@ -10,6 +10,7 @@ const userService = {
     updateUser,
     updateUserRefreshToken,
     getUserByRefreshToken,
+    updateUserProfileImage,
 };
 
 async function getAllUsers(): Promise<UserModel[]> {
@@ -35,6 +36,14 @@ async function updateUser(id: number, userData: UserModel): Promise<UserModel | 
     const user = await prisma.user.update({
         where: { id },
         data: userData,
+    });
+    return user;
+}
+
+async function updateUserProfileImage(id: number, profileImage: string): Promise<UserModel | null> {
+    const user = await prisma.user.update({
+        where: { id },
+        data: { profile_image: profileImage },
     });
     return user;
 }

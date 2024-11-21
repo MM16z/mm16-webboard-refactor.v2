@@ -16,6 +16,9 @@ async function getUserPosts(userId: number | null) {
         where: {
             user_id: userId === 2 ? undefined : userId !== null ? userId : undefined,
         },
+        include: {
+            user: true,
+        }
     });
     return userPosts;
 }

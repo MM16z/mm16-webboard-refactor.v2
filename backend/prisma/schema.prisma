@@ -15,6 +15,7 @@ model user {
   username      String       @unique(map: "users_un_username") @db.VarChar
   create_at     DateTime     @default(now()) @db.Timestamptz(2)
   refresh_token String?      @db.VarChar
+  profile_image String?      @db.VarChar
   posts         posts[]
   comments      comments[]
   post_liked    post_liked[]

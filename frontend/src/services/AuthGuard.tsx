@@ -26,7 +26,8 @@ const AuthGuard = ({ children }: { children: React.ReactNode }) => {
                     dispatch(updateUser({
                         email: user.email,
                         username: user.username,
-                        userId: user.id
+                        userId: user.id,
+                        profileImage: user.profile_image
                     }))
                 }
             } catch (error) {
@@ -34,7 +35,8 @@ const AuthGuard = ({ children }: { children: React.ReactNode }) => {
                 dispatch(updateUser({
                     email: '',
                     username: '',
-                    userId: null
+                    userId: null,
+                    profileImage: ''
                 }))
                 clearAuthCookies()
                 if (pathname !== '/') {

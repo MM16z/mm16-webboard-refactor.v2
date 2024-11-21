@@ -10,7 +10,7 @@
 .userpanel-container > form {
   position: relative;
   display: inline-block;
-  top: 200px;
+  top: 80px;
   left: 100px;
   height: auto;
 }
@@ -36,6 +36,9 @@
   display: inline-flex;
   flex-direction: column;
   align-items: center;
+  align-self: center;
+  justify-content: center;
+  justify-self: center;
 }
 
 .user-panel-inputcontainer > label {
@@ -464,11 +467,11 @@
 }
 
 @media screen and (min-width: 1620px) {
-  .user-panel-inputcontainer {
+  /* .user-panel-inputcontainer {
     scale: 1.3;
     top: 100px;
     left: 70px;
-  }
+  } */
   .userpanel-container {
     padding-bottom: 27%;
   }

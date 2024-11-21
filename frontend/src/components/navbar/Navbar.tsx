@@ -28,12 +28,12 @@ export default function Navbar() {
             if (response.status === 200) {
                 dispatch(logOut())
                 clearAuthCookies()
-                window.location.href = '/'
                 Swal.fire({
                     title: 'Success',
                     text: 'Logout success',
                     icon: 'success'
                 })
+                window.location.href = '/'
             }
         } catch (error) {
             console.log(error)

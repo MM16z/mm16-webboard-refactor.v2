@@ -1,8 +1,15 @@
 import { PrismaClient } from '@prisma/client';
 import cors from 'cors';
-import express from 'express';
+import express, { NextFunction } from 'express';
+import { MulterError } from 'multer';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 import routes from './routes/routes.js';
+import { initializeUploadDirectories } from './utils/uploadMiddlewares.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const APP_PORT = process.env.APP_PORT || 8001;
 
@@ -12,14 +19,42 @@ const prisma = new PrismaClient();
 app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
 
+const uploadsPath = path.join(__dirname, '../uploads');
+app.use('/uploads', express.static(uploadsPath));
+
+initializeUploadDirectories();
+
 app.get('/', (req, res) => {
     res.send('Server is runing.......');
 });
 app.use('/api', routes);
 
-app.use((err: Error, req: express.Request, res: express.Response) => {
-    console.error(err.stack);
-    res.status(500).send('Something broke!');
+app.use((err: Error, req: express.Request, res: express.Response, next: NextFunction) => {
+    if (err instanceof MulterError) {
+        console.error('Multer error:', err);
+        return res.status(400).json({
+            success: false,
+            message: err.message
+        });
+    }
+
+    if (err.message.includes('Invalid file type')) {
+        return res.status(400).json({
+            success: false,
+            message: err.message
+        });
+    }
+
+    next(err);
+});
+
+app.use((err: Error, _req: express.Request, res: express.Response) => {
+    console.error('Error:', err);
+    res.status(500).json({
+        success: false,
+        message: 'Something went wrong!',
+        error: err.message
+    });
 });
 
 process.on('unhandledRejection', (reason, promise) => {

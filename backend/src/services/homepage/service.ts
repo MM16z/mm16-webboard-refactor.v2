@@ -36,9 +36,14 @@ async function getAllHomePageData(userId: number | null, offset: number) {
                     post_liked: true,
                 },
             },
+            user: {
+                select: {
+                    profile_image: true,
+                },
+            },
         },
         orderBy: {
-            id: 'asc',
+            created_at: 'asc',
         },
         take: 6,
         skip: offset,

@@ -9,6 +9,7 @@ export type currentUser = {
     email: string,
     userId: number | null,
     username: string,
+    profileImage: string | null
 }
 
 const initialState: userState = {
@@ -16,6 +17,7 @@ const initialState: userState = {
         email: '',
         userId: null,
         username: '',
+        profileImage: null
     }
 }
 

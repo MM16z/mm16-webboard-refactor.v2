@@ -5,3 +5,7 @@ docker-volumes
 
 # Environment variables
 .env
+
+# Uploads
+uploads/*
+!uploads/.gitkeep

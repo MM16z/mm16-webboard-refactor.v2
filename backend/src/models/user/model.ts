@@ -5,4 +5,5 @@ export type UserModel = {
     username: string;
     create_at?: Date;
     refresh_token?: string | null;
+    profile_image?: string | null;
 };

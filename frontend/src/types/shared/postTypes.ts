@@ -5,4 +5,7 @@ export interface Post {
     post_username: string;
     created_at: string;
     user_id: number;
+    user: {
+        profile_image: string;
+    };
 }

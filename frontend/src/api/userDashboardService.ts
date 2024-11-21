@@ -10,7 +10,8 @@ export const dashBoardApiService = {
     getAllUserPosts,
     createPost,
     editPost,
-    deletePost
+    deletePost,
+    uploadProfileImage
 };
 
 async function getAllUserPosts(params: any) {
@@ -35,6 +36,15 @@ async function editPost(payload: any) {
 async function deletePost(payload: any) {
     const response = await apiService().post(`${USER_DASHBOARD_BASE_URL}/delete_post`, JSON.stringify(payload), {
         headers: HEADERS
+    });
+    return response;
+}
+
+async function uploadProfileImage(payload: any) {
+    const response = await apiService().post(`user/upload-profile-image`, payload, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        },
     });
     return response;
 }

@@ -20,6 +20,7 @@ import { usePostOperations } from '@/hooks/useUserDashboardHooks';
 import { PostFormData } from "@/types/userDashboard.types";
 import LoadingSkeleton from '@/components/ui/loading-skeleton';
 import { postSchema } from "@/schemas/userdashboard.schema";
+import { ProfileImageUpload } from "@/components/profile/ProfileImageUpload";
 
 const UserDashboardPage = () => {
     const router = useRouter();
@@ -89,10 +90,15 @@ const UserDashboardPage = () => {
                     onEditSubmit={onEditSubmitHandler}
                 />
             )}
-            <span id="username" className={`${silkscreen.className}`} style={{ zIndex: 1 }}>
-                {DASHBOARD_CONSTANTS.MESSAGES.WELCOME} {getUserData?.username}
-            </span>
-            <form onSubmit={handleSubmit(onPostSubmitHandler)}>
+            <form onSubmit={handleSubmit(onPostSubmitHandler)} className="z-10 text-center">
+                <span className={`${silkscreen.className} text-4xl z-10`}>
+                    {DASHBOARD_CONSTANTS.MESSAGES.WELCOME} {getUserData?.username}
+                </span>
+                <div className="flex justify-center items-center mt-4 mb-4">
+                    <ProfileImageUpload
+                        currentImageUrl={getUserData?.profileImage ?? ''}
+                    />
+                </div>
                 <div className="user-panel-inputcontainer">
                     <label htmlFor="post-text-input" style={{ marginBottom: "20px" }}>
                         {DASHBOARD_CONSTANTS.MESSAGES.WRITE_POST}
@@ -135,7 +141,7 @@ const UserDashboardPage = () => {
                     ))}
                 </div>
             </section>
-            <div id="home-page-bg">
+            <div id="home-page-bg" className="z-0">
                 <span id="home-page-bg-nested"></span>
             </div>
         </motion.div>

@@ -4,6 +4,11 @@ export interface HomePagePost extends Post {
     post_liked_count: number
     isLiked: boolean
     comments: PostComment[]
+    user: User
+}
+
+type User = {
+    profile_image: string
 }
 
 export interface PostComment {
@@ -12,6 +17,7 @@ export interface PostComment {
     user: {
         id: number
         username: string
+        profile_image: string
     }
 }
 

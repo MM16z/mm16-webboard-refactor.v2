@@ -36,7 +36,8 @@ function LoginPage() {
                     dispatch(updateUser({
                         email: user.email,
                         username: user.username,
-                        userId: user.id
+                        userId: user.id,
+                        profileImage: user.profile_image
                     }))
                 }
                 router.push('/user-dashboard')

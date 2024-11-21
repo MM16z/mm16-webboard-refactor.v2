@@ -5,6 +5,7 @@ import Image from "next/image";
 import userIcon from "@/assets/bussiness-man.png";
 import dayjs from "dayjs";
 import { verela } from "@/fonts/fonts";
+import { ProfileImageUpload } from "@/components/profile/ProfileImageUpload";
 
 interface UserDashboardPostBoxProps {
     post: Post;
@@ -39,15 +40,7 @@ export const UserDashboardPostBox = ({
             <span className="vertical-line"></span>
             <span className="vertical-line_1"></span>
             <span className="horizontal-line"></span>
-            <span className="profile-circle-line">
-                <Image
-                    src={userIcon}
-                    alt="profile-circle"
-                    width={40}
-                    height={40}
-                    style={{ scale: 1.2 }}
-                />
-            </span>
+            <ProfileImageUpload currentImageUrl={post.user?.profile_image ?? ''} showUploadSection={false} />
 
             {isOwner && (
                 <>
