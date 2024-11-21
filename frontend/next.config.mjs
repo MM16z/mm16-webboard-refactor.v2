@@ -2,7 +2,16 @@
 const nextConfig = {
     reactStrictMode: false,
     images: {
-        domains: ['localhost', 'https://www.mm16-webboard.shop'],
+        remotePatterns: [
+            {
+                protocol: 'http',
+                hostname: 'localhost',
+            },
+            {
+                protocol: 'https',
+                hostname: 'www.mm16-webboard.shop',
+            },
+        ],
     },
 };
 
