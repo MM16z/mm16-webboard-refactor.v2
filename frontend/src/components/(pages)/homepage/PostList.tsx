@@ -1,22 +1,24 @@
 import { HomePagePost, PostComment } from "@/types/shared/homePageTypes"
 import PostBoxContainer from "@/components/post-box/PostBox"
-import HeartBtn from "@/components/heart-btn/HeartBtn"
-import CommentForm from "./commentForm"
+import { HeartButton } from "@/components/heart-btn/HeartBtn"
+import CommentForm from "./CommentForm"
 import CommentBoxContainer from "@/components/post-box/CommentBox"
 import dayjs from "dayjs"
 import MasonryComponent from "@/components/masonry/Masonry"
+import { useRef } from "react"
 
 interface PostListProps {
     posts: HomePagePost[]
 }
 
 export const PostList = ({ posts }: PostListProps) => {
+    const containerRef = useRef<HTMLDivElement>(null);
     const emptyPosts = Array(Math.max(0, 6 - posts.length)).fill({})
     const allPosts = [...posts, ...emptyPosts]
 
     return (
-        <div className="masonry-warper mt-4">
-            <MasonryComponent>
+        <div className="masonry-warper mt-4 pb-10" ref={containerRef}>
+            <MasonryComponent containerRef={containerRef}>
                 {allPosts.map((post: any, index: number) => {
                     if (Object.keys(post).length === 0) {
                         return <div key={`empty-${index}`} style={{ width: '400px', height: '0px' }}></div>
@@ -37,10 +39,10 @@ const PostItem = ({ post }: { post: HomePagePost }) => {
             postdate={dayjs(post.created_at).format("D MMM YYYY - HH:mm")}
             userImage={post.user.profile_image}
         >
-            <HeartBtn
-                postLikedCount={post.post_liked_count}
-                defaultChecked={post.isLiked}
+            <HeartButton
                 postId={post.id}
+                initialLikeCount={post.post_liked_count}
+                defaultChecked={post.isLiked}
             />
             <CommentList comments={post.comments} />
             <CommentForm postId={post.id} />
@@ -62,7 +64,7 @@ const CommentList = ({ comments }: { comments: PostComment[] }) => {
                         userImage={comment.user.profile_image}
                     />
                 )
-            }) : <div className="relative left-5 top-2.5 font-silkscreen text-sm opacity-80 mb-4">No comment</div>}
+            }) : <div className="relative left-5 top-2.5 font-silkscreen text-sm opacity-80 mb-4 text-purple-700 font-bold">No comment</div>}
         </>
     )
 } 

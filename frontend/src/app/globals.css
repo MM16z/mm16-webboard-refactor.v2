@@ -103,3 +103,78 @@
     @apply bg-background text-foreground;
   }
 }
+
+.split-container {
+  display: flex;
+  flex-direction: row;
+  height: calc(100vh - 64px);
+  width: 100%;
+}
+
+.split-panel {
+  overflow: hidden;
+  height: 100%;
+}
+
+.gutter {
+  background-color: hsl(var(--border));
+  position: relative;
+  cursor: col-resize;
+  transition: all 0.2s ease;
+}
+
+.gutter::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  height: 50px;
+  width: 4px;
+  background-color: hsl(var(--muted-foreground));
+  border-radius: 4px;
+  opacity: 0.5;
+  transition: all 0.2s ease;
+}
+
+.gutter::before {
+  content: '⋮';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 20px;
+  color: hsl(var(--muted-foreground));
+  opacity: 0.7;
+  transition: all 0.2s ease;
+}
+
+.gutter:hover {
+  background-color: hsl(var(--muted));
+}
+
+.gutter:hover::after {
+  height: 80px;
+  opacity: 0.8;
+  background-color: hsl(var(--primary));
+}
+
+.gutter:hover::before {
+  opacity: 1;
+  color: hsl(var(--primary));
+}
+
+.gutter:active {
+  background-color: hsl(var(--muted));
+}
+
+.gutter:active::after {
+  height: 120px;
+  opacity: 1;
+  background-color: hsl(var(--primary));
+}
+
+.split-panel > * {
+  height: 100%;
+  overflow: auto;
+}

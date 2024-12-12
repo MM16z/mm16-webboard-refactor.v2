@@ -13,13 +13,13 @@ function PostBoxContainer({ children, ...props }: PostBoxContainerType) {
             <span className="horizontal-line"></span>
             <ProfileImageUpload currentImageUrl={userImage ?? ''} showUploadSection={false} />
             <span className="username">{username}</span>
-            <span className={`title ${verela.className}`}>{title}</span>
+            <span className={`title`}>{title}</span>
             <span className="line5"></span>
             <span className="line6"></span>
-            <span className={`post-content ${verela.className}`}>{postcontent}</span>
-            <span className={`${silkscreen.className} text-right pr-4 font-bold tracking-[-0.10em] mt-2`}>{postdate}</span>
+            <span className={`post-content`}>{postcontent}</span>
+            <span className={`text-right pr-4 font-bold tracking-[-0.10em] mt-2`}>{postdate}</span>
             <div
-                className={`${silkscreen.className} text-[15px] mt-[10px] ml-[20px] mb-[10px] opacity-75 font-bold`}
+                className={`text-[15px] mt-[10px] ml-[20px] mb-[10px] opacity-75 font-bold`}
             >
                 comments
             </div>

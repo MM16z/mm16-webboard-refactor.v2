@@ -180,7 +180,7 @@
 .post-box-container > .post-content {
   display: inline-block;
   position: relative;
-  font-size: 14.6px;
+  font-size: 16px;
   left: 20px;
   margin-top: 60px;
   margin-bottom: 10px;
@@ -237,113 +237,11 @@
   transition: 0.3s;
 }
 
-@media screen and (min-width: 0px) and (max-width: 361px) {
-  .post-box-container > .post-content {
-    inline-size: 260px;
-    word-wrap: break-word;
+@media screen and (min-width: 0px) and (max-width: 500px) {
+  .post-box-container {
+    scale: 0.8;
   }
-  .post-box-container > .vertical-line_1 {
-    left: 300px;
-  }
-  .post-box-container > .horizontal-line {
-    width: 260px;
-  }
-  .post-box-container > .horizontal-line_1 {
-    width: 260px;
-  }
-  .post-box-container > .line5 {
-    width: 220px;
-  }
-  .post-box-container > .line6 {
-    width: 180px;
-  }
-  .post-box-container > .username {
-    inline-size: 200px;
-  }
-  .post-box-container > .title {
-    inline-size: 250px;
-  }
-  .post-box-container > .post-date {
-    right: 110px;
-  }
-  .post-box-container > form {
-    width: 300px;
-  }
-  .post-box-container > form > #comment-input {
-    width: 250px;
-  }
-}
-
-@media screen and (min-width: 362px) and (max-width: 450px) {
-  .post-box-container > .post-content {
-    inline-size: 260px;
-    word-wrap: break-word;
-  }
-  .post-box-container > .vertical-line_1 {
-    left: 300px;
-  }
-  .post-box-container > .horizontal-line {
-    width: 260px;
-  }
-  .post-box-container > .horizontal-line_1 {
-    width: 260px;
-  }
-  .post-box-container > .line5 {
-    width: 220px;
-  }
-  .post-box-container > .line6 {
-    width: 180px;
-  }
-  .post-box-container > .username {
-    inline-size: 200px;
-  }
-  .post-box-container > .title {
-    inline-size: 250px;
-  }
-  .post-box-container > .post-date {
-    right: 110px;
-  }
-  .post-box-container > form {
-    width: 300px;
-  }
-  .post-box-container > form > #comment-input {
-    width: 250px;
-  }
-}
-
-@media screen and (min-width: 451px) and (max-width: 500px) {
-  .post-box-container > .post-content {
-    inline-size: 260px;
-    word-wrap: break-word;
-  }
-  .post-box-container > .vertical-line_1 {
-    left: 300px;
-  }
-  .post-box-container > .horizontal-line {
-    width: 260px;
-  }
-  .post-box-container > .horizontal-line_1 {
-    width: 260px;
-  }
-  .post-box-container > .line5 {
-    width: 220px;
-  }
-  .post-box-container > .line6 {
-    width: 180px;
-  }
-  .post-box-container > .username {
-    inline-size: 200px;
-  }
-  .post-box-container > .title {
-    inline-size: 250px;
-  }
-  .post-box-container > .post-date {
-    right: 110px;
-  }
-  .post-box-container > form {
-    width: 300px;
-  }
-  .post-box-container > form > #comment-input {
-    width: 250px;
+  .my-masonry-grid_column {
+    padding-left: 0;
   }
 }

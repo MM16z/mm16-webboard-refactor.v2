@@ -4,13 +4,12 @@
 import { silkscreen } from '@/fonts/fonts'
 import { useRouter, usePathname } from 'next/navigation'
 import { useAppDispatch, useAppSelector } from '@/redux/hook'
-import { useCallback, useEffect, useRef } from 'react'
+import { useRef } from 'react'
 import { logOut } from '@/redux/slices/authSlice/authSlice'
 import { authApiService } from '@/api/auth/auth'
 import Swal from 'sweetalert2'
 import MobileMenu from './MobileMenu'
 import HamButton from './HamButton'
-import Cookies from 'js-cookie'
 import { clearAuthCookies } from '@/utils/cookies'
 
 export default function Navbar() {
@@ -62,7 +61,7 @@ export default function Navbar() {
                 router.refresh()
             }}>
                 <div className='nav-logo text-[40px] tracking-[-5px] mt-[-10px]'>MM16STUDIO</div>
-                <div className='nav-logo-sub text-[20px] tracking-[-1px] text-white mt-[-15px]'>Webboard</div>
+                <div className='nav-logo-sub text-[20px] tracking-[-1px] text-white mt-[-15px]'>Webboard X E-Commerce</div>
             </div>
             {/* nav-item2 */}
             <div>
@@ -72,19 +71,23 @@ export default function Navbar() {
             </div>
             {/* nav-item3 */}
             <div className='mr-10 text-[20px] flex-row gap-x-2 cursor-pointer text-white hidden sm:flex'>
-                {getUserData.userId && pathname !== '/user-dashboard' ? <div onClick={() => {
-                    router.push('/user-dashboard', { scroll: false })
-                    router.refresh()
-                }}>Dashboard</div> : null}
-                {getUserData.userId && pathname === '/user-dashboard' ? <div onClick={() => {
-                    router.push('/', { scroll: false })
-                    router.refresh()
-                }}>HOMEPAGE</div> : null}
+                {getUserData.userId && pathname !== '/user-dashboard' ? <div
+                    className='text-purple-600'
+                    onClick={() => {
+                        router.push('/user-dashboard', { scroll: false })
+                        router.refresh()
+                    }}>Dashboard</div> : null}
+                {getUserData.userId && pathname === '/user-dashboard' ? <div
+                    className='text-purple-600'
+                    onClick={() => {
+                        router.push('/', { scroll: false })
+                        router.refresh()
+                    }}>HOMEPAGE</div> : null}
                 {getUserData.userId ? <div>|</div> : null}
                 {getUserData.userId ? null : <>
-                    <div onClick={() => { router.push('/register', { scroll: false }) }}>Register</div>
+                    <div className='text-purple-600' onClick={() => { router.push('/register', { scroll: false }) }}>Register</div>
                     <div>|</div>
-                    <div onClick={() => { router.push('/login', { scroll: false }) }}>Login</div>
+                    <div className='text-purple-600' onClick={() => { router.push('/login', { scroll: false }) }}>Login</div>
                 </>}
                 {getUserData.userId ? <div className='text-red-600' onClick={onLogout}>Logout</div> : null}
             </div>

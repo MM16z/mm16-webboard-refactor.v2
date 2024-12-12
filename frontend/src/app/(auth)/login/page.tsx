@@ -1,7 +1,7 @@
 'use client'
 
 // react, nextjs
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 // components
 import AuthForm from '@/components/form/AuthForm'
@@ -17,15 +17,17 @@ import { authApiService } from '@/api/auth/auth'
 import { updateAuth } from '@/redux/slices/authSlice/authSlice'
 import { setAuthCookies, clearAuthCookies, getCookie } from '@/utils/cookies'
 import getUserInfo from '@/api/auth/getUserInfo'
-
+import LoadingText from '@/components/ui/loadingText'
 
 function LoginPage() {
     const router = useRouter()
-
     const dispatch = useAppDispatch()
+
+    const [isLoading, setIsLoading] = useState(false)
 
     const onSubmitHandler = async (value: any) => {
         try {
+            setIsLoading(true)
             const response: AxiosResponse = await authApiService.Login(value)
             if (response.status === 200) {
                 const token = response.data.accessToken
@@ -57,6 +59,8 @@ function LoginPage() {
                     text: `Login failed! - Error ${error.response.data.message}`,
                 })
             }
+        } finally {
+            setIsLoading(false)
         }
     }
 
@@ -66,6 +70,10 @@ function LoginPage() {
             router.push('/user-dashboard')
         }
     }, [router])
+
+    if (isLoading) {
+        return <LoadingText />
+    }
 
     return (
         <div className={`login-page-container ${silkscreen.className} flex flex-col w-full h-full justify-center justify-items-center p-8 gap-y-4`}>

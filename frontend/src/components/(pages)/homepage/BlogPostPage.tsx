@@ -4,14 +4,13 @@ import { useAppSelector } from "@/redux/hook"
 import { getHomePageData } from '@/hooks/useHomePageHooks'
 import { useEffect, useState } from 'react'
 import { HomePageData } from "@/types/shared/homePageTypes"
-import SystemInfo from "@/components/SystemInfo"
 import { PostList } from "./PostList"
 import ReactPaginateComponent from "@/components/paginate/ReactPaginate"
 import { useSearchParams } from 'next/navigation'
 import { silkscreen, verela } from "@/fonts/fonts"
-import GitHubButton from "@/components/common/GitHubButton"
+import LoadingText from "@/components/ui/loadingText"
 
-export function ClientPosts() {
+export function BlogPostsPage() {
     const userId = useAppSelector((state) => state.userSlice.currentUser.userId)
     const [data, setData] = useState<HomePageData | null>(null)
     const searchParams = useSearchParams()
@@ -25,17 +24,15 @@ export function ClientPosts() {
         fetchData()
     }, [userId, page])
 
-    if (!data) return <div className="text-center text-4xl font-bold text-purple-700 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">Loading...</div>
+    if (!data) return <LoadingText />
 
     return (
         <main className={`${silkscreen.className} overflow-x-hidden`}>
-            <SystemInfo />
-            <GitHubButton />
-            <div id="home-page-bg">
-                <span id="home-page-bg-nested"></span>
-            </div>
-
-            <h3 className={`${verela.className} text-center pt-4 pb-2 text-2xl`}>
+            <h2 className={`text-2xl mt-2  text-center`} style={{
+                fontFamily: verela.style.fontFamily,
+                fontWeight: 800
+            }}>BlogPostsPage</h2>
+            <h3 className={`${verela.className} text-center pt-4 pb-2 text-2xl opacity-70`}>
                 Register with any non-existing email to post, comment, or like.
                 <br />
                 <span>

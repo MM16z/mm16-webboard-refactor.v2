@@ -15,6 +15,8 @@ import Navbar from "@/components/navbar/Navbar";
 import StoreProvider from "@/redux/providerComponent/storeProvider";
 import AuthGuard from "@/services/AuthGuard";
 import { Toaster } from 'sonner'
+import SystemInfo from "@/components/SystemInfo";
+import GitHubButton from "@/components/common/GitHubButton";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -34,7 +36,11 @@ export default function RootLayout({
         <body className={inter.className}>
           <AuthGuard>
             <Navbar />
-            {children}
+            <SystemInfo />
+            <GitHubButton />
+            <div className="z-10 relative">
+              {children}
+            </div>
           </AuthGuard>
           <Toaster
             position="top-right"
@@ -49,6 +55,9 @@ export default function RootLayout({
               className: 'my-toast-class',
             }}
           />
+          <div className="homepage-bg fixed w-full h-full top-0 z-0 pointer-events-none">
+            <span className="homepage-bg-nested fixed w-full h-full top-0 z-0 pointer-events-none"></span>
+          </div>
         </body>
       </StoreProvider>
     </html>

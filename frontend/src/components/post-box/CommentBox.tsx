@@ -51,7 +51,7 @@ const CommentBoxContainer = (probs: CommentBoxContainer) => {
                 <ProfileImageUpload currentImageUrl={userImage ?? ''} showUploadSection={false} customSize="w-8 h-8" />
                 <span className="">{commentusername}</span>
             </div>
-            <span className={`${verela.className} pt-2`}>{commentcontent}</span>
+            <span className={`pt-2 text-sm`}>{commentcontent}</span>
             <button className="post-action-btn delete-btn" style={{
                 display: isHasPermission ? "block" : "none",
                 cursor: "pointer",

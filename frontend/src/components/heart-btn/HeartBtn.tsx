@@ -1,64 +1,65 @@
 'use client';
 
-import { ChangeEvent, ChangeEventHandler, useEffect, useState } from "react";
-import { homepageApiService } from "@/api/homepageService";
+import { useEffect, useState, useCallback } from "react";
+import { useDebounce } from "@/hooks/useDebounce";
 import { useAppSelector } from "@/redux/hook";
+import { homepageApiService } from "@/api/homepageService";
 
-type HeartBtnPropsType = {
-    postLikedCount: number;
+interface HeartButtonProps {
+    postId: number;
+    initialLikeCount: number;
     defaultChecked: boolean;
-    disabled?: boolean;
-    postId: number
-};
+}
+export const HeartButton = ({
+    postId,
+    initialLikeCount,
+    defaultChecked,
+}: HeartButtonProps) => {
+    const userId = useAppSelector(state => state.userSlice.currentUser.userId);
+    const [likeCount, setLikeCount] = useState(initialLikeCount);
+    const [isLiked, setIsLiked] = useState(defaultChecked);
+    const { isDebouncing, startDebounce } = useDebounce(500);
 
-const DEBOUNCE_DELAY = 1500;
+    const handleLikeToggle = useCallback(async () => {
+        if (isDebouncing || !userId) return;
 
-const HeartBtn = (props: HeartBtnPropsType) => {
-    const { postId } = props
-    const userId = useAppSelector(state => state.userSlice.currentUser.userId)
+        const newIsLiked = !isLiked;
+        const previousCount = likeCount;
 
-    const [postLikedCount, setPostLikedCount] = useState(0);
-    const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+        setIsLiked(newIsLiked);
+        setLikeCount(prev => prev + (newIsLiked ? 1 : -1));
+        startDebounce();
 
-    const onPostLikeHandler = (event: ChangeEvent<HTMLInputElement>) => {
-        props.defaultChecked = event.target.checked
         try {
-            if (event.target.checked) {
-                homepageApiService.updatePostLike(postId, "like").then(_ => {
-                    setPostLikedCount(prev => prev + 1)
-                }).catch(_ => {
-                    setPostLikedCount(prev => prev - 1)
-                })
-            } else {
-                homepageApiService.updatePostLike(postId, "unlike").then(_ => {
-                    setPostLikedCount(prev => prev - 1)
-                }).catch(_ => {
-                    setPostLikedCount(prev => prev + 1)
-                })
-            }
-            setIsButtonDisabled(true);
-            setTimeout(() => {
-                setIsButtonDisabled(false);
-            }, DEBOUNCE_DELAY);
+            await homepageApiService.updatePostLike(
+                postId,
+                newIsLiked ? "like" : "unlike"
+            );
         } catch (error) {
-            console.log(error)
+            setIsLiked(!newIsLiked);
+            setLikeCount(previousCount);
+            console.error('Failed to update like status:', error);
         }
-    }
+    }, [isLiked, likeCount, isDebouncing, userId, postId, startDebounce]);
 
     useEffect(() => {
-        setPostLikedCount(props.postLikedCount)
-    }, [props.postLikedCount])
+        setLikeCount(initialLikeCount);
+    }, [initialLikeCount]);
+
+    useEffect(() => {
+        setIsLiked(defaultChecked);
+    }, [defaultChecked]);
 
     return (
         <div className="heartbtn-warpper">
-            <div className="postlikecount">{postLikedCount}</div>
+            <div className="postlikecount">{likeCount}</div>
             <input
                 type="checkbox"
                 id="checkbox"
-                onChange={onPostLikeHandler}
-                defaultChecked={props.defaultChecked}
-                disabled={!userId}
-                style={{ cursor: !userId ? "help" : "pointer" }}
+                onChange={handleLikeToggle}
+                checked={isLiked}
+                disabled={!userId || isDebouncing}
+                style={{ cursor: !userId ? "help" : isDebouncing ? "wait" : "pointer" }}
             />
             <label htmlFor="checkbox">
                 <noscript>By http://robeen.io</noscript>
@@ -121,6 +122,3 @@ const HeartBtn = (props: HeartBtnPropsType) => {
         </div>
     );
 };
-HeartBtn.displayName = "HeartBtn";
-
-export default HeartBtn;
