@@ -1,11 +1,11 @@
 import { HomePagePost, PostComment } from "@/types/shared/homePageTypes"
 import PostBoxContainer from "@/components/post-box/PostBox"
 import { HeartButton } from "@/components/heart-btn/HeartBtn"
-import CommentForm from "./CommentForm"
 import CommentBoxContainer from "@/components/post-box/CommentBox"
 import dayjs from "dayjs"
 import MasonryComponent from "@/components/masonry/Masonry"
 import { useRef } from "react"
+import CommentForm from "./CommentForm"
 
 interface PostListProps {
     posts: HomePagePost[]

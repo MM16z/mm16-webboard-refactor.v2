@@ -1,6 +1,6 @@
 'use client'
 
-import { FixWithoutRounding } from '@/utils/fixWithoutRounding'
+import { FixWithoutRounding } from '@/utils/fixWithoutRounding';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React from 'react'
 import ReactPaginate from "react-paginate";
