@@ -27,7 +27,7 @@ export function BlogPostsPage() {
     if (!data) return <LoadingText />
 
     return (
-        <main className={`${silkscreen.className} overflow-x-hidden`}>
+        <main className={`${silkscreen.className} overflow-x-hidden custom-scrollbar`}>
             <h2 className={`text-2xl mt-2  text-center`} style={{
                 fontFamily: verela.style.fontFamily,
                 fontWeight: 800
