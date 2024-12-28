@@ -3,8 +3,8 @@ import { FormFields } from "@/types/auth.types";
 export const formFields: FormFields = {
     login: [
         {
-            label: "Enter your email :D",
-            type: "email",
+            label: "Enter your email/username :D",
+            type: "text",
             name: "email",
             autoFocus: true,
         },

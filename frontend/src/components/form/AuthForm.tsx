@@ -52,7 +52,7 @@ export default function AuthForm({ onFormSubmit, pageType }: AuthFormType) {
             {pageType === "login" && (
                 <div className="text-center pt-4">
                     <div className='toregisref opacity-60'>
-                        or try an global account? admin:1234 or
+                        Try demo account - username: admin, password: 1234
                     </div>
                     <div className='font-bold cursor-pointer'>Click here</div>
                 </div>
