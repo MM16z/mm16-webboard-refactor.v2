@@ -31,11 +31,16 @@
 # # Start the application with PM2
 # CMD ["pm2-runtime", "dist/server.js", "--name", "mm16-webboard-express-refactor"]
 
-# Use an official Node.js runtime as the base image
-FROM node:18-alpine
+# Use Node.js with Debian/Ubuntu
+FROM node:18-slim
 
 # Set the working directory
 WORKDIR /app
+
+# Install OpenSSL and other required dependencies
+RUN apt-get update && apt-get install -y \
+    openssl \
+    && rm -rf /var/lib/apt/lists/*
 
 # Install PM2 globally
 RUN npm install -g pm2
