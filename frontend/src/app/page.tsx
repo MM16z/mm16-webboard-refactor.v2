@@ -1,8 +1,8 @@
 'use client'
 
 import Split from 'react-split'
-import { BlogPostsPage } from '@/components/(pages)/homepage/BlogPostPage'
-import { MarketplacePage } from '@/components/(pages)/marketplace/MarketplacePage'
+import { BlogPostsPage } from '@/components/(appPages)/homepage/BlogPostPage'
+import { MarketplacePage } from '@/components/(appPages)/marketplace/MarketplacePage'
 
 export default function HomePage() {
   return (

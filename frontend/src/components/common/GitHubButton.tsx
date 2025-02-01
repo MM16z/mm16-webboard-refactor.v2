@@ -6,7 +6,7 @@ import { Github } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const GitHubButton = () => {
-    const nodeRef = useRef(null);
+    const nodeRef = useRef<HTMLElement>(null);
     const [isDragging, setIsDragging] = useState(false);
     const dragStartTime = useRef<number>(0);
     // const defaultPosition = { x: typeof window !== 'undefined' ? window.innerWidth - 100 : 0, y: 20 };
@@ -27,7 +27,7 @@ const GitHubButton = () => {
 
     return (
         <Draggable
-            nodeRef={nodeRef}
+            nodeRef={nodeRef as React.RefObject<HTMLElement>}
             // defaultPosition={defaultPosition}
             // onStart={handleStart}
             // onStop={handleStop}
@@ -35,7 +35,7 @@ const GitHubButton = () => {
             bounds="body"
         >
             <div
-                ref={nodeRef}
+                ref={nodeRef as React.RefObject<HTMLDivElement>}
                 className={cn(
                     "fixed z-50 select-none p-4 rounded-full",
                     "bg-black hover:bg-gray-800 transition-colors",

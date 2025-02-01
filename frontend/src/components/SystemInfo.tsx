@@ -51,7 +51,7 @@ const formatUptime = (uptimeInSeconds: number): string => {
 };
 
 const SystemInfo = () => {
-    const nodeRef = useRef(null);
+    const nodeRef = useRef<HTMLElement>(null);
     const [systemInfo, setSystemInfo] = useState<SystemInfoData | null>(null);
 
     useEffect(() => {
@@ -78,8 +78,8 @@ const SystemInfo = () => {
     const formattedUptime = formatUptime(uptimeInSeconds);
 
     return (
-        <Draggable nodeRef={nodeRef} defaultPosition={{ x: window.innerWidth - 300, y: window.innerHeight - 200 }}>
-            <div ref={nodeRef} className={`${silkscreen.className} fixed bg-black bg-opacity-70 text-white p-2 rounded-md shadow-md z-50 text-xs cursor-move opacity-80`}>
+        <Draggable nodeRef={nodeRef as React.RefObject<HTMLElement>} defaultPosition={{ x: window.innerWidth - 300, y: window.innerHeight - 200 }}>
+            <div ref={nodeRef as React.RefObject<HTMLDivElement>} className={`${silkscreen.className} fixed bg-black bg-opacity-70 text-white p-2 rounded-md shadow-md z-50 text-xs cursor-move opacity-80`}>
                 <h3 className="font-bold mb-1">System Info (EC2 Free Tier)</h3>
                 <div className="grid grid-cols-[auto,1fr] gap-x-2 gap-y-1">
                     <div>Uptime:</div>

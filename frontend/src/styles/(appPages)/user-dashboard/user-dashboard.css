@@ -508,3 +508,8 @@
     #f0f0f0 80px
   ) !important;
 }
+
+/* This will automatically apply to all child elements */
+.userpanel-container span {
+  font-family: inherit; /* Inherits from parent container */
+}

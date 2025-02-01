@@ -4,14 +4,19 @@ import authSlice from '../slices/authSlice/authSlice'
 
 export const makeStore = () => {
     return configureStore({
-        reducer: { userSlice, authSlice }
+        reducer: {
+            userSlice,
+            authSlice
+        },
+        // Add middleware configuration to handle serialization
+        middleware: (getDefaultMiddleware) =>
+            getDefaultMiddleware({
+                serializableCheck: false
+            })
     })
 }
 
-export const store = makeStore()
-
+// Infer types from store
 export type AppStore = ReturnType<typeof makeStore>
-// Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<AppStore['getState']>
-// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
 export type AppDispatch = AppStore['dispatch']

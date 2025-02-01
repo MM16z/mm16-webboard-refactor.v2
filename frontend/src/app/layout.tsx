@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import './globals.css'
 
 import '@/styles/homepage/homepage.css'
-import '@/styles/(pages)/user-dashboard/user-dashboard.css'
+import '@/styles/(appPages)/user-dashboard/user-dashboard.css'
 import '@/styles/navbar/navbar.css'
 import '@/styles/post-box/comment-box.css'
 import '@/styles/post-box/post-box.css'
