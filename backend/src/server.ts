@@ -16,7 +16,20 @@ const APP_PORT = process.env.APP_PORT || 8001;
 const app = express();
 const prisma = new PrismaClient();
 
-app.use(cors({ origin: true, credentials: true }));
+const allowedOrigins = [
+    'https://mm16-webboard.vercel.app',
+    'http://localhost:3000',
+    'http://localhost:5173'
+];
+
+const isDevelopment = process.env.NODE_ENV === 'development';
+
+app.use(cors({
+    origin: isDevelopment ? '*' : allowedOrigins,
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(express.json());
 
 const uploadsPath = path.join(__dirname, '../uploads');
