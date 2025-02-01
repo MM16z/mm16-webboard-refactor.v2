@@ -1,6 +1,5 @@
 .nav-container {
   position: relative;
-  z-index: 2;
 }
 
 .nav-container::before,

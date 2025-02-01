@@ -24,14 +24,15 @@
     "paths": {
       "@/*": [
         "./src/*"
-      ],
+      ]
       // "@/components/*": [
       //   "src/app/components/*"
       // ],
       // "@/styles/*": [
       //   "./styles/*"
       // ]
-    }
+    },
+    "target": "ES2017"
   },
   "include": [
     "next-env.d.ts",

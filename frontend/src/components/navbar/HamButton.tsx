@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
 
-export default function HamButton({ onHamButtonClick, hamButtonRef }: { onHamButtonClick: () => void, hamButtonRef: React.RefObject<SVGSVGElement> }) {
+export default function HamButton({ onHamButtonClick, hamButtonRef }: { onHamButtonClick: () => void, hamButtonRef: React.RefObject<SVGSVGElement | null> }) {
     return (
         <svg
             id="hambtn"

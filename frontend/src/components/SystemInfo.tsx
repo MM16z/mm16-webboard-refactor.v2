@@ -1,7 +1,7 @@
 'use client'
 
 import { homepageApiService } from '@/api/homepageService';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import Draggable from 'react-draggable';
 import { silkscreen } from '@/fonts/fonts';
 interface SystemInfoData {
@@ -51,6 +51,7 @@ const formatUptime = (uptimeInSeconds: number): string => {
 };
 
 const SystemInfo = () => {
+    const nodeRef = useRef(null);
     const [systemInfo, setSystemInfo] = useState<SystemInfoData | null>(null);
 
     useEffect(() => {
@@ -64,7 +65,7 @@ const SystemInfo = () => {
         };
 
         fetchSystemInfo();
-        const interval = setInterval(fetchSystemInfo, 10000);
+        const interval = setInterval(fetchSystemInfo, 3000);
 
         return () => clearInterval(interval);
     }, []);
@@ -77,9 +78,9 @@ const SystemInfo = () => {
     const formattedUptime = formatUptime(uptimeInSeconds);
 
     return (
-        <Draggable defaultPosition={{ x: window.innerWidth - 300, y: window.innerHeight - 200 }}>
-            <div className={`${silkscreen.className} fixed bg-black bg-opacity-70 text-white p-2 rounded-md shadow-md z-50 text-xs cursor-move opacity-80`}>
-                <h3 className="font-bold mb-1">System Info (AWS EC2 Free Tier)</h3>
+        <Draggable nodeRef={nodeRef} defaultPosition={{ x: window.innerWidth - 300, y: window.innerHeight - 200 }}>
+            <div ref={nodeRef} className={`${silkscreen.className} fixed bg-black bg-opacity-70 text-white p-2 rounded-md shadow-md z-50 text-xs cursor-move opacity-80`}>
+                <h3 className="font-bold mb-1">System Info (EC2 Free Tier)</h3>
                 <div className="grid grid-cols-[auto,1fr] gap-x-2 gap-y-1">
                     <div>Uptime:</div>
                     <div>{formattedUptime}</div>

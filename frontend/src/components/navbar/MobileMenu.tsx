@@ -1,28 +1,24 @@
 'use client'
 
 import Image from "next/image";
-import axios from "axios";
 import { useRouter, usePathname } from "next/navigation";
 
 import mm16grid from "@/assets/mm16grid.png";
 
-import Cookies from "js-cookie";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import { logOut } from "@/redux/slices/authSlice/authSlice";
 import { authApiService } from "@/api/auth/auth";
 import Swal from "sweetalert2";
 import { clearAuthCookies } from "@/utils/cookies";
 
-const MobileMenu = ({ hamButtonRef, mobileMenuRef }: { hamButtonRef: React.RefObject<SVGSVGElement>, mobileMenuRef: React.RefObject<HTMLDivElement> }) => {
+const MobileMenu = ({ hamButtonRef, mobileMenuRef }: { hamButtonRef: React.RefObject<SVGSVGElement | null>, mobileMenuRef: React.RefObject<HTMLDivElement | null> }) => {
   const pathname = usePathname()
   const dispatch = useAppDispatch()
   const getUserData = useAppSelector((state) => state.userSlice.currentUser)
   const router = useRouter();
 
   return (
-    <div className="mobilemenu z-50" ref={mobileMenuRef} style={{
-      marginTop: "66px",
-    }}>
+    <div className="mobilemenu z-50" ref={mobileMenuRef} style={{ marginTop: "66px" }}>
       {pathname === "/user-dashboard" ? null : (
         <p
           onClick={() => {
@@ -97,10 +93,12 @@ const MobileMenu = ({ hamButtonRef, mobileMenuRef }: { hamButtonRef: React.RefOb
         </p>
       ) : null}
       <div className="image-warper">
-        <Image src={mm16grid} alt="" style={{
-          maxWidth: "inherit",
-          width: "900px",
-        }}></Image>
+        <Image
+          src={mm16grid}
+          alt="Decorative grid pattern"
+          className="mobilemenu-image"
+          priority
+        />
       </div>
     </div>
   );

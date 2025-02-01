@@ -52,7 +52,7 @@ export default function Navbar() {
 
     return (
         <nav
-            className={`nav-container ${silkscreen.className} h-[66px] flex flex-row justify-between items-center`}>
+            className={`nav-container ${silkscreen.className} h-[66px] flex flex-row justify-between items-center z-50`}>
             <MobileMenu hamButtonRef={hamButtonRef} mobileMenuRef={mobileMenuRef} />
             <HamButton onHamButtonClick={onHamButtonClick} hamButtonRef={hamButtonRef} />
             {/* nav-item1 */}
