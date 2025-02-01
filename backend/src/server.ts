@@ -25,38 +25,9 @@ const allowedOrigins = [
 const isDevelopment = process.env.NODE_ENV === 'development';
 
 app.use(cors({
-    origin: function (origin, callback) {
-        if (!origin) {
-            return callback(null, true);
-        }
-
-        if (isDevelopment) {
-            return callback(null, true);
-        }
-
-        if (allowedOrigins.includes(origin)) {
-            return callback(null, true);
-        }
-
-        console.log('Blocked origin:', origin);
-        callback(new Error('Not allowed by CORS'));
-    },
-    credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
-    exposedHeaders: ['Content-Range', 'X-Content-Range'],
-    maxAge: 86400
+    origin: isDevelopment ? true : allowedOrigins,
+    credentials: true
 }));
-
-app.options('*', cors());
-
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', isDevelopment ? '*' : allowedOrigins.join(','));
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-    res.header('Access-Control-Allow-Credentials', 'true');
-    next();
-});
 
 app.use(express.json());
 
