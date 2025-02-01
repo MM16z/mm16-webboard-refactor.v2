@@ -17,8 +17,8 @@ const app = express();
 const prisma = new PrismaClient();
 
 const allowedOrigins = [
-    'https://mm16-webboard.vercel.app',
-    'https://mm16-webboard.vercel.app/',
+    'mm16-webboard.vercel.app',
+    'mm16-webboard.vercel.app/',
     'http://localhost:3000',
     'http://localhost:5173'
 ];
