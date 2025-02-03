@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { editPostSchema, type EditPostFormData } from '@/schemas/userdashboard.schema'
@@ -18,6 +18,13 @@ export default function EditInput({ onClose, titleInputValue, onEditSubmit }: Pa
         },
         mode: 'onChange'
     });
+
+    useEffect(() => {
+        window.scrollTo({
+            top: 100,
+            behavior: 'smooth'
+        });
+    }, []);
 
     return (
         <section className="usereditinput-container">

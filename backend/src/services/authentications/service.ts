@@ -10,14 +10,14 @@ export const authenticationService = {
 };
 
 async function register(userData: registerModel) {
-    const user = await prisma.user.create({
+    const user = await prisma.users.create({
         data: userData,
     });
     return user;
 }
 
 async function getUserByEmail(email: string) {
-    const user = await prisma.user.findUnique({
+    const user = await prisma.users.findUnique({
         where: { email },
     });
     return user;

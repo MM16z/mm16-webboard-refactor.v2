@@ -64,7 +64,7 @@ app.use((err: Error, req: express.Request, res: express.Response, next: NextFunc
 });
 
 app.use((err: Error, _req: express.Request, res: express.Response) => {
-    console.error('Error:', err);
+    console.error('Error (err.message):', err.message);
     res.status(500).json({
         success: false,
         message: 'Something went wrong!',

@@ -18,6 +18,9 @@ async function getUserPosts(userId: number | null) {
         },
         include: {
             user: true,
+        },
+        orderBy: {
+            updated_at: 'desc',
         }
     });
     return userPosts;
@@ -44,6 +47,7 @@ async function updatePost(post: PostModel) {
         where: { id: post.id },
         data: {
             post_content: post.post_content,
+            updated_at: new Date(),
         },
     });
     return updatedPost;

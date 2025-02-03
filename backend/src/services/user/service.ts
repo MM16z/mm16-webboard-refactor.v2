@@ -14,26 +14,26 @@ const userService = {
 };
 
 async function getAllUsers(): Promise<UserModel[]> {
-    const users = await prisma.user.findMany();
+    const users = await prisma.users.findMany();
     return users;
 }
 
 async function getUserById(id: number): Promise<UserModel | null> {
-    const user = await prisma.user.findUnique({
+    const user = await prisma.users.findUnique({
         where: { id },
     });
     return user;
 }
 
 async function getUserByRefreshToken(refreshToken: string): Promise<UserModel | null> {
-    const user = await prisma.user.findFirst({
+    const user = await prisma.users.findFirst({
         where: { refresh_token: refreshToken },
     });
     return user;
 }
 
 async function updateUser(id: number, userData: UserModel): Promise<UserModel | null> {
-    const user = await prisma.user.update({
+    const user = await prisma.users.update({
         where: { id },
         data: userData,
     });
@@ -41,7 +41,7 @@ async function updateUser(id: number, userData: UserModel): Promise<UserModel | 
 }
 
 async function updateUserProfileImage(id: number, profileImage: string): Promise<UserModel | null> {
-    const user = await prisma.user.update({
+    const user = await prisma.users.update({
         where: { id },
         data: { profile_image: profileImage },
     });
@@ -49,7 +49,7 @@ async function updateUserProfileImage(id: number, profileImage: string): Promise
 }
 
 async function updateUserRefreshToken(id: number, refreshToken: string): Promise<UserModel | null> {
-    const user = await prisma.user.update({
+    const user = await prisma.users.update({
         where: { id },
         data: { refresh_token: refreshToken },
     });

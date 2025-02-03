@@ -9,22 +9,24 @@ import ReactPaginateComponent from "@/components/paginate/ReactPaginate"
 import { useSearchParams } from 'next/navigation'
 import { silkscreen, verela } from "@/fonts/fonts"
 import LoadingText from "@/components/ui/loadingText"
+import { useQuery } from "@tanstack/react-query"
+import NoData from "@/components/ui/NoData"
 
 export function BlogPostsPage() {
     const userId = useAppSelector((state) => state.userSlice.currentUser.userId)
-    const [data, setData] = useState<HomePageData | null>(null)
     const searchParams = useSearchParams()
     const page = Number(searchParams.get('page')) || 1
 
-    useEffect(() => {
-        const fetchData = async () => {
-            const { allPosts, postsCount } = await getHomePageData(page, userId?.toString() || '')
-            setData({ allPosts, postsCount })
-        }
-        fetchData()
-    }, [userId, page])
+    const { isPending, data } = useQuery({
+        queryKey: ['posts', userId],
+        queryFn: async () => {
+            return getHomePageData(page, userId?.toString() || '')
+        },
+    })
 
-    if (!data) return <LoadingText />
+    if (isPending) return <LoadingText />
+
+    if (!data) return <NoData message="No blog posts found. Be the first to create one!" />
 
     return (
         <main className={`${silkscreen.className} overflow-x-hidden custom-scrollbar`}>
