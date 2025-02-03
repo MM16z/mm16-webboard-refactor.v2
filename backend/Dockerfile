@@ -63,6 +63,9 @@ RUN npm run build
 # Run Prisma generate
 RUN npx prisma generate
 
+# Run Prisma migrate
+RUN npx prisma migrate dev
+
 # Expose the port
 EXPOSE 8001
 
