@@ -1,14 +1,13 @@
 
 import type { Server, Socket } from 'socket.io';
 
+import { allowedOrigins } from '../server.js';
 import systemInfoHandler from './handlers/systemInfo.handler.js';
 import { WebSocketHandler } from './types.js';
 
 const handlers: WebSocketHandler[] = [
     systemInfoHandler,
 ];
-
-const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',') || [];
 
 export function configureWebSocket(io: Server, role: string) {
     const allowHandlersList = [''];

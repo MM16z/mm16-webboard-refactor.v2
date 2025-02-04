@@ -19,11 +19,13 @@ const APP_PORT = process.env.APP_PORT || 8001;
 const app = express();
 const prisma = new PrismaClient();
 
-const isDevelopment = process.env.NODE_ENV === 'development';
-const allowedOrigins = !isDevelopment && process.env.ALLOWED_ORIGINS?.split(',') || [];
+// const isDevelopment = process.env.NODE_ENV === 'development';
+// const allowedOrigins = !isDevelopment && process.env.ALLOWED_ORIGINS?.split(',') || [];
+
+export const allowedOrigins = ['https://mm16-webboard.vercel.app', 'mm16-webboard.vercel.app'];
 
 app.use(cors({
-    origin: isDevelopment ? true : allowedOrigins,
+    origin: allowedOrigins,
     credentials: true
 }));
 
@@ -59,7 +61,7 @@ const httpServer = createServer(app);
 
 export const io = new Server(httpServer, {
     cors: {
-        origin: isDevelopment ? true : allowedOrigins,
+        origin: allowedOrigins,
         credentials: true
     }
 });
