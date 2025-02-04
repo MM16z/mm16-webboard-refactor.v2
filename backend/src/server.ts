@@ -19,12 +19,10 @@ const APP_PORT = process.env.APP_PORT || 8001;
 const app = express();
 const prisma = new PrismaClient();
 
-// const isDevelopment = process.env.NODE_ENV_TYPE === 'development';
-// export const allowedOrigins = !isDevelopment && process.env.ALLOWED_ORIGINS?.split(',') || [];
-export const allowedOrigins = ['https://mm16-webboard.vercel.app', 'https://mm16-webboard.vercel.app/'];
+const isDevelopment = process.env.NODE_ENV_TYPE === 'development';
+export const allowedOrigins = !isDevelopment && process.env.ALLOWED_ORIGINS?.split(',').map(origin => origin.trim()) || [];
 
-
-
+console.log("node_env_type", process.env.NODE_ENV_TYPE);
 console.log("allowedOrigins", allowedOrigins);
 
 app.use(cors({
