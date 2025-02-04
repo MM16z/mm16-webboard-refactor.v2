@@ -4,6 +4,10 @@ import { homepageApiService } from '@/api/homepageService';
 import { useEffect, useState, useRef } from 'react';
 import Draggable from 'react-draggable';
 import { silkscreen } from '@/fonts/fonts';
+
+import { io } from 'socket.io-client';
+
+const socket = io(process.env.NEXT_PUBLIC_WS_URL as string)
 interface SystemInfoData {
     uptime: string;
     memory: {
@@ -55,19 +59,15 @@ const SystemInfo = () => {
     const [systemInfo, setSystemInfo] = useState<SystemInfoData | null>(null);
 
     useEffect(() => {
-        const fetchSystemInfo = async () => {
-            try {
-                const response = await homepageApiService.getSystemInfo();
-                setSystemInfo(response.systemInfo);
-            } catch (error) {
-                console.error('Error fetching system info:', error);
-            }
+        const handleSystemInfo = (data: SystemInfoData) => {
+            setSystemInfo(data);
         };
 
-        fetchSystemInfo();
-        const interval = setInterval(fetchSystemInfo, 3000);
+        socket.on('system_info', handleSystemInfo);
 
-        return () => clearInterval(interval);
+        return () => {
+            socket.off('system_info', handleSystemInfo);
+        };
     }, []);
 
     if (!systemInfo) return null;

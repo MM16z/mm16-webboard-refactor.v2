@@ -10,6 +10,7 @@ A production-ready social platform with modern architecture and best practices.
 
 ### Frontend
 - **Core**: Next.js 14 (App Router), React 19, TypeScript
+- **Real-time**: WebSocket.io Client 4.7
 - **State**: Redux Toolkit, React Query 5, Zustand (future)
 - **UI**: Shadcn/UI, Framer Motion 11, React Masonry
 - **Styling**: TailwindCSS 3.4, CSS Modules, Gradient Animations
@@ -18,6 +19,7 @@ A production-ready social platform with modern architecture and best practices.
 
 ### Backend
 - **Runtime**: Node.js 18, Express 4.19
+- **Real-time**: WebSocket.io Server 4.7
 - **ORM**: Prisma 5.18 with PostgreSQL
 - **Auth**: BcryptJS, JWT with refresh tokens
 - **File Handling**: Multer 1.4, FS module
@@ -32,7 +34,7 @@ A production-ready social platform with modern architecture and best practices.
 
 ## ✨ Key Features
 - **Real-time UI**  
-  Split panels with resizable gutters, masonry layouts, draggable components
+  WebSocket-powered live updates, split panels with resizable gutters, masonry layouts, draggable components
 - **Auth System**  
   JWT cookie auth with refresh rotation, protected routes
 - **Rich Interactions**  
@@ -43,6 +45,8 @@ A production-ready social platform with modern architecture and best practices.
   Dynamic imports, React.memo, CSS containment
 - **Error Handling**  
   Unified error boundaries, Sonner toasts
+- **System Monitoring**  
+  WebSocket streaming of server metrics to admin dashboard
 
 ## 🛠️ Development Setup
 
@@ -66,6 +70,7 @@ npm run dev
 ### Frontend (.env.local)
 ```env
 NEXT_PUBLIC_URL=http://localhost:xxxx
+NEXT_PUBLIC_WS_URL= ws://localhost:xxxx
 NEXT_PUBLIC_API_URL=http://localhost:xxxx/api
 ```
 

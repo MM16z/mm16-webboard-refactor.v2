@@ -1,12 +1,15 @@
 import { PrismaClient } from '@prisma/client';
 import cors from 'cors';
 import express, { NextFunction } from 'express';
+import { createServer } from "http";
 import { MulterError } from 'multer';
 import path from 'path';
+import { Server } from "socket.io";
 import { fileURLToPath } from 'url';
 
 import routes from './routes/routes.js';
 import { initializeUploadDirectories } from './utils/uploadMiddlewares.js';
+import { configureWebSocket } from './websocket/webSocket.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -16,16 +19,8 @@ const APP_PORT = process.env.APP_PORT || 8001;
 const app = express();
 const prisma = new PrismaClient();
 
-const allowedOrigins = [
-    'https://mm16-webboard.vercel.app',
-    'https://mm16-webboard.vercel.app/',
-    'mm16-webboard.vercel.app',
-    'mm16-webboard.vercel.app/',
-    'http://localhost:3000',
-    'http://localhost:5173'
-];
-
 const isDevelopment = process.env.NODE_ENV === 'development';
+const allowedOrigins = !isDevelopment && process.env.ALLOWED_ORIGINS?.split(',') || [];
 
 app.use(cors({
     origin: isDevelopment ? true : allowedOrigins,
@@ -34,8 +29,24 @@ app.use(cors({
 
 app.use(express.json());
 
+// const uploadsPath = path.join(__dirname, '../uploads');
+// app.use('/uploads', express.static(uploadsPath));
+
 const uploadsPath = path.join(__dirname, '../uploads');
-app.use('/uploads', express.static(uploadsPath));
+app.use('/uploads', express.static(uploadsPath, {
+    fallthrough: false
+}));
+
+app.use('/uploads', (err: unknown, req: express.Request, res: express.Response, next: NextFunction) => {
+    if (err instanceof Error && 'status' in err && err.status === 404) {
+        return res.status(404).json({
+            success: false,
+            message: 'File not found'
+        });
+    }
+    next(err);
+});
+
 
 initializeUploadDirectories();
 
@@ -43,6 +54,24 @@ app.get('/', (req, res) => {
     res.send('Server is runing.......');
 });
 app.use('/api', routes);
+
+const httpServer = createServer(app);
+
+export const io = new Server(httpServer, {
+    cors: {
+        origin: isDevelopment ? true : allowedOrigins,
+        credentials: true
+    }
+});
+
+httpServer.listen(APP_PORT, () => {
+    console.log(`Server is running on port ${APP_PORT}`);
+});
+
+// TODO: implement role later
+const role = 'admin';
+
+configureWebSocket(io, role);
 
 app.use((err: Error, req: express.Request, res: express.Response, next: NextFunction) => {
     if (err instanceof MulterError) {
@@ -65,7 +94,9 @@ app.use((err: Error, req: express.Request, res: express.Response, next: NextFunc
 
 app.use((err: Error, _req: express.Request, res: express.Response) => {
     console.error('Error (err.message):', err.message);
-    res.status(500).json({
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const statusCode = 'status' in err ? (err as any).status : 500;
+    res.status(statusCode).json({
         success: false,
         message: 'Something went wrong!',
         error: err.message
@@ -82,13 +113,18 @@ process.on('uncaughtException', (error) => {
     process.exit(1);
 });
 
-const server = app.listen(APP_PORT, () => {
-    console.log(`Server is running on port ${APP_PORT}`);
-});
+// const server = app.listen(APP_PORT, () => {
+//     console.log(`Server is running on port ${APP_PORT}`);
+// });
 
 process.on('SIGTERM', () => {
     console.log('SIGTERM signal received: closing HTTP server');
-    server.close(() => {
+    // server.close(() => {
+    //     console.log('HTTP server closed');
+    //     prisma.$disconnect();
+    //     process.exit(0);
+    // });
+    httpServer.close(() => {
         console.log('HTTP server closed');
         prisma.$disconnect();
         process.exit(0);
