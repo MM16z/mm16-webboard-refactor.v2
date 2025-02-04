@@ -68,6 +68,8 @@ EXPOSE 8001
 
 ENV JWT_SECRET=${JWT_SECRET}
 ENV JWT_REFRESH_SECRET=${JWT_REFRESH_SECRET}
+ENV NODE_ENV=${NODE_ENV}
+ENV ALLOWED_ORIGINS=${ALLOWED_ORIGINS}
 
 # Start the application with PM2
 CMD ["pm2-runtime", "dist/server.js", "--name", "mm16-webboard-express-refactor"]
