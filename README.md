@@ -1,80 +1,115 @@
 # Modern Full-Stack Social Media Application
 
-A production-ready, full-stack social media application built with modern technologies and best practices. This project demonstrates real-world application architecture, scalable design patterns.
+A production-ready social platform with modern architecture and best practices.
 
-## 🚀 Tech Stack
+![Tech Stack](https://img.shields.io/badge/Next.js-14.2.3-black?logo=next.js)
+![React](https://img.shields.io/badge/React-19.0.0-blue?logo=react)
+![Prisma](https://img.shields.io/badge/Prisma-5.18.0-2D3748?logo=prisma)
+
+## 🚀 Enhanced Tech Stack
 
 ### Frontend
-- **Next.js 14** with App Router
-- **TypeScript** for type safety
-- **Shadcn/UI** for beautiful, accessible components
-- **Redux Toolkit** for state management
-- **TailwindCSS** for styling
+- **Core**: Next.js 14 (App Router), React 19, TypeScript
+- **State**: Redux Toolkit, React Query 5, Zustand (future)
+- **UI**: Shadcn/UI, Framer Motion 11, React Masonry
+- **Styling**: TailwindCSS 3.4, CSS Modules, Gradient Animations
+- **Utils**: Day.js, Lodash, React Paginate
+- **Auth**: JWT Cookies, Next-Auth (future)
 
 ### Backend
-- **Node.js** with Express
-- **PostgreSQL** database
-- **Prisma** as ORM
-- **JWT** for authentication
-- **Docker** for containerization
+- **Runtime**: Node.js 18, Express 4.19
+- **ORM**: Prisma 5.18 with PostgreSQL
+- **Auth**: BcryptJS, JWT with refresh tokens
+- **File Handling**: Multer 1.4, FS module
+- **DevOps**: PM2, Docker, NGINX
 
-## ✨ Features
+### DevOps
+- **Containerization**: Docker + Docker Compose
+- **Orchestration**: PM2 Cluster Mode
+- **Infra**: AWS EC2, S3 (future)
+- **Monitoring**: PM2 Logs, Custom Metrics
+- **CI/CD**: GitHub Actions / CD -> (TODO)
 
-- 🔐 Secure Authentication & Authorization
-- 👤 User Profiles with Image Upload
-- 📱 Responsive Design
-- 🎨 Modern UI/UX with Shadcn
-- 🔄 Real-time Updates
-- 🚀 Performance Optimized
+## ✨ Key Features
+- **Real-time UI**  
+  Split panels with resizable gutters, masonry layouts, draggable components
+- **Auth System**  
+  JWT cookie auth with refresh rotation, protected routes
+- **Rich Interactions**  
+  Heart animations, gradient text effects, smooth transitions
+- **Dashboard**  
+  System monitoring with live metrics, post management
+- **Optimizations**  
+  Dynamic imports, React.memo, CSS containment
+- **Error Handling**  
+  Unified error boundaries, Sonner toasts
 
-## 🛠️ Prerequisites
+## 🛠️ Development Setup
 
-- Node.js 18+
-- PostgreSQL
-- pnpm (recommended) or npm
-- Docker & Docker Compose
+```bash
+# Frontend
+cd frontend
+npm install
+cp .env.example .env.local
 
-## 📦 Installation
+# Backend
+cd ../backend
+npm install
+cp .env.example .env
 
-Install dependencies
-1. cd frontend/backend
-2. npm install
-3. Environment Setup
+# Start both
+npm run dev
+```
+
+## 🌐 Environment Variables
+
+### Frontend (.env.local)
+```env
+NEXT_PUBLIC_URL=http://localhost:xxxx
+NEXT_PUBLIC_API_URL=http://localhost:xxxx/api
+```
+
+### Backend (.env)
+```env
+DATABASE_URL="postgresql://user:pass@localhost:5432/mm16-webboard"
+JWT_SECRET=your_jwt_secret
+JWT_REFRESH_SECRET=your_refresh_secret
+UPLOAD_DIR=./uploads
+```
 
 ## 🏗️ Project Structure
 
-### frontend/
-
-```markdown
-frontend/ ├── src/ │ ├── app/ # Next.js App Router pages │ ├── api/ # API services │ ├── assets/ # Static assets │ ├── components/ # Reusable components │ ├── constants/ # Constants │ ├── hooks/ # Custom hooks │ ├── schemas/ # Zod schemas │ ├── types/ # TypeScript types │ ├── utils/ # Utility functions │ └── redux/ # Redux store and slices └── public/ # Static assets
+### Frontend Architecture
+```
+frontend/
+├── src/
+│   ├── app/               # App router pages
+│   ├── components/        # Reusable components
+│   │   ├── (appPages)     # Feature sections
+│   │   ├── masonry/       # Layout components
+│   │   └── ui/           # Shadcn components
+│   ├── redux/            # Store configuration
+│   ├── styles/           # CSS modules
+│   │   ├── homepage/     # Page-specific styles
+│   │   └── components/   # Component styles
+│   ├── types/            # TypeScript definitions
+│   └── services/         # API clients
 ```
 
-## .ENV FRONTEND
-
-```env
-NEXT_PUBLIC_API_URL=http://localhost:3000
-NEXT_PUBLIC_UPLOAD_URL=http://localhost:3000/uploads
-DATABASE_URL="postgresql://username:password@localhost:5432/dbname"
+### Backend Services
 ```
+backend/
+├── src/
+│   ├── controllers/      # Route handlers
+│   ├── middleware/       # Auth, uploads, error
+│   ├── prisma/           # Schema + migrations
+│   ├── routes/           # Express endpoints
+│   ├── services/         # Business logic layer
+│   └── utils/            # Helpers + configs
+├── uploads/              # User-generated content
+└── Dockerfile            # Production build
 
-### backend/
+## 📜 License
+MIT License - See [LICENSE](LICENSE) for details.
 
-```markdown
-backend/ ├── src/ │ ├── controllers/ # Route controllers │ ├── services/ # Business logic │ ├── models/ # Database models │ ├── routes/ # API routes │ ├── middleware/ # Custom middleware │ ├── utils/ # Utility functions │ └── prisma/ # Database schema and migrations └── uploads/ # Uploaded files
-```
-
-## .ENV BACKEND
-
-```env
-DATABASE_URL="postgresql://XX:XX@localhost:XX/postgres?schema=mm16-webboard"
-JWT_SECRET=XX
-JWT_REFRESH_SECRET=XX
-
-APP_PORT=XX
-DB_USER=XX
-DB_PASSWORD=XX
-DB_NAME=XX
-DB_PORT=XX
-```
-
-- MM16z
+---
