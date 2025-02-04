@@ -7,7 +7,10 @@ import { silkscreen } from '@/fonts/fonts';
 
 import { io } from 'socket.io-client';
 
-const socket = io(process.env.NEXT_PUBLIC_WS_URL as string)
+const socket = io(process.env.NEXT_PUBLIC_WS_URL as string, {
+    transports: ['websocket'],
+    secure: true,
+})
 interface SystemInfoData {
     uptime: string;
     memory: {
