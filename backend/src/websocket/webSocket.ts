@@ -1,8 +1,8 @@
 
 import type { Server, Socket } from 'socket.io';
 
-import systemInfoHandler from './handlers/systemInfo.handler';
-import { WebSocketHandler } from './types';
+import systemInfoHandler from './handlers/systemInfo.handler.js';
+import { WebSocketHandler } from './types.js';
 
 const handlers: WebSocketHandler[] = [
     systemInfoHandler,

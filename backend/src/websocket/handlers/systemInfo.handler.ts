@@ -2,7 +2,7 @@ import os from 'os';
 import { Server, Socket } from "socket.io";
 import si from 'systeminformation';
 
-import { WebSocketHandler } from "../types";
+import { WebSocketHandler } from "../types.js";
 
 const systemInfoHandler: WebSocketHandler = {
     name: "systemInfo",
