@@ -34,9 +34,7 @@ jobs:
         run: |
           docker-compose build \
             --build-arg JWT_SECRET=${{ secrets.JWT_SECRET }} \
-            --build-arg JWT_REFRESH_SECRET=${{ secrets.JWT_REFRESH_SECRET }} \
-            --build-arg NODE_ENV=${{ secrets.NODE_ENV }} \
-            --build-arg ALLOWED_ORIGINS=${{ secrets.ALLOWED_ORIGINS }}
+            --build-arg JWT_REFRESH_SECRET=${{ secrets.JWT_REFRESH_SECRET }}
           docker-compose push
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
@@ -45,5 +43,3 @@ jobs:
           DB_NAME: ${{ secrets.DB_NAME }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
           JWT_REFRESH_SECRET: ${{ secrets.JWT_REFRESH_SECRET }}
-          NODE_ENV: ${{ secrets.NODE_ENV }}
-          ALLOWED_ORIGINS: ${{ secrets.ALLOWED_ORIGINS }}

@@ -10,8 +10,6 @@ services:
       - DATABASE_URL=${DATABASE_URL}
       - JWT_SECRET=${JWT_SECRET}
       - JWT_REFRESH_SECRET=${JWT_REFRESH_SECRET}
-      - NODE_ENV=${NODE_ENV}
-      - ALLOWED_ORIGINS=${ALLOWED_ORIGINS}
     depends_on:
       - db
 
